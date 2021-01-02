@@ -316,15 +316,15 @@ void setup() {
     textToDisplay[1] = " Geoff Shorten 2020";
     textToDisplay[2] = "Firmware: ";
     textToDisplay[2] += g_FirmwareVersion;
-    textToDisplay[2] += ", Setting up WiFi";
+    // textToDisplay[2] += ", Setting up WiFi";
     displayText(textToDisplay);
     makeSonosIPList();
     printOutSonosList();
 
     // get weather
-    String weatherUpdate[3] = {"Getting current ", "weather conditions", "    for "};
-    weatherUpdate[2] += CurrentConfig.locationName;
-    displayText(weatherUpdate);
+    // String weatherUpdate[3] = {"Getting current ", "weather conditions", "    for "};
+    //weatherUpdate[2] += CurrentConfig.locationName;
+    //displayText(weatherUpdate);
 
     // set up the NTP time client to get current date and time
     timeClient.begin();        // start time client
@@ -350,8 +350,9 @@ void setup() {
     }
     Serial.print("Active Sonos Unit is: "); Serial.println(g_ActiveUnit);
 
-    updateSonosStatus(2000, true);
+    //updateSonosStatus(2000, true);
     StatusDisplayOn = true;
+    statusDisplay();
   }
   else {
     // state is setup
