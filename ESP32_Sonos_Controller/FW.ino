@@ -3,10 +3,12 @@
    Revisions
    1.2  First working OTA
    1.3  added messages on display when OTA updating
+   2.0  major update, moved all files to git repository
+   2.1  increased time between wifi connect attempts to 1 second, 10 max attempts
 */
 
 String FirmwareVer = {
-  "1.5"                 //added Firmware version to start up splash
+  "2.1"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {
