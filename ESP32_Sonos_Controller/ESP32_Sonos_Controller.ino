@@ -208,8 +208,6 @@ SonosUPnP g_sonos = SonosUPnP(webClient, ethConnectError); // make sonos object
 FullTrackInfo ArtistTitle;      // for creator, title, artist
 String CurrentTrackInfo;        // will hold source if radio or say sirius instead of artist, title.
 
-
-
 String g_utcString;
 int utcOffsetInSeconds = -25200;
 WiFiUDP ntpUDP;
