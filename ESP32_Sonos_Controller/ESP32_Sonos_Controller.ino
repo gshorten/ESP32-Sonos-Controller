@@ -83,7 +83,7 @@ WiFiClient webClient;
 
 // Firmware update variables
 #define URL_fw_Version "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/bin_version.txt"
-#define URL_fw_Bin "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/fw.bin"
+#define URL_fw_Bin "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/ESP32_Sonos_Controller/fw.bin"
 
 // Global Variables and Constants
 boolean StatusDisplayOn = true;                 // flag to turn updating of the status display on or off
