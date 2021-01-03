@@ -103,6 +103,6 @@ int FirmwareVersionCheck(void) {
     }
   }
 
-  NVS.setString("Firmware", g_FirmwareVersion);     // Save the version number
+  //NVS.setString("Firmware", g_FirmwareVersion);     // Save the version number
   return 0;
 }
