@@ -102,6 +102,7 @@ boolean g_EncoderInUse = false;
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 String g_FirmwareVersion = "0.0";
+boolean g_WeatherUpdateOn = true;
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {

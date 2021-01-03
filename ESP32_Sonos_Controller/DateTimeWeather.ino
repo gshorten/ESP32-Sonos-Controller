@@ -64,52 +64,53 @@ weatherInfo getWeather() {
   String weatherResponse;
   unsigned int updateFreq = 300000;     //update every 10 minutes
   static long lastUpdate = millis();
- 
-  if (millis() - lastUpdate >= updateFreq || g_firstTime == true) {
-    // update weather
-    lastUpdate = millis();
-    g_firstTime = false;        //first time flag ensures we get the weather first time we boot.
-    if (webClient.connect("api.openweathermap.org", 80)) {
-      Serial.println("Connecting to OpenWeatherMap.org");
-      webClient.print("GET  /data/2.5/weather?id=" + cityID + "&appid=" + apiKey + "&units=metric");
-      Serial.print("Weather location is: "); Serial.println(CurrentConfig.locationName);
-      webClient.println();
-    }
-    else {
-      Serial.println("unable to connect to openweathermap.org");
-    }
-    while (webClient.connected()) {
-      Serial.println("getting weather response");
-      delay(1000);
-      weatherResponse = webClient.readStringUntil('\n');
-      Serial.println(weatherResponse);
-    }
-    // client.println("Connection: close");
-    StaticJsonDocument<6000> jsonWeather;
-    DeserializationError err = deserializeJson(jsonWeather, weatherResponse);
-    if (err) {
-      Serial.print(F("deserializeJson() failed with code "));
-      Serial.println(err.c_str());
-    }
-    else {
-      //deserialize the weather json file, extract info for the weather display
-      Serial.println("Deserializing the weather Json");
-      String currDescription = jsonWeather["weather"][0]["main"];
-      int currTemp = round(jsonWeather["main"]["temp"]);
-      int currWind = round(jsonWeather["wind"]["speed"]);
-      //CurrWeatherDisp = String(currTemp) + "c, " + currDescription + " " + String(currWind) + " km/h" ;
-      //Serial.println(CurrWeatherDisp);
-      weather.currTemp = currTemp;
-      weather.currWind = currWind;
-      weather.currShortDesc = currDescription;
-      weather.currLongDesc = "";
-      weather.fcstTemp = 0;
-      weather.fcstWind = 0;
-      weather.fcstShortDesc = "";
-      weather.fcstLongDesc = "";
-      Serial.println("Weather Struct data:");
-      Serial.print("Current Temp: "); Serial.println(weather.currTemp);
-      Serial.print("Short Desc: "); Serial.println(weather.currShortDesc);
+  if (g_WeatherUpdateOn) {
+    if (millis() - lastUpdate >= updateFreq || g_firstTime == true) {
+      // update weather
+      lastUpdate = millis();
+      g_firstTime = false;        //first time flag ensures we get the weather first time we boot.
+      if (webClient.connect("api.openweathermap.org", 80)) {
+        Serial.println("Connecting to OpenWeatherMap.org");
+        webClient.print("GET  /data/2.5/weather?id=" + cityID + "&appid=" + apiKey + "&units=metric");
+        Serial.print("Weather location is: "); Serial.println(CurrentConfig.locationName);
+        webClient.println();
+      }
+      else {
+        Serial.println("unable to connect to openweathermap.org");
+      }
+      while (webClient.connected()) {
+        Serial.println("getting weather response");
+        delay(1000);
+        weatherResponse = webClient.readStringUntil('\n');
+        Serial.println(weatherResponse);
+      }
+      // client.println("Connection: close");
+      StaticJsonDocument<6000> jsonWeather;
+      DeserializationError err = deserializeJson(jsonWeather, weatherResponse);
+      if (err) {
+        Serial.print(F("deserializeJson() failed with code "));
+        Serial.println(err.c_str());
+      }
+      else {
+        //deserialize the weather json file, extract info for the weather display
+        Serial.println("Deserializing the weather Json");
+        String currDescription = jsonWeather["weather"][0]["main"];
+        int currTemp = round(jsonWeather["main"]["temp"]);
+        int currWind = round(jsonWeather["wind"]["speed"]);
+        //CurrWeatherDisp = String(currTemp) + "c, " + currDescription + " " + String(currWind) + " km/h" ;
+        //Serial.println(CurrWeatherDisp);
+        weather.currTemp = currTemp;
+        weather.currWind = currWind;
+        weather.currShortDesc = currDescription;
+        weather.currLongDesc = "";
+        weather.fcstTemp = 0;
+        weather.fcstWind = 0;
+        weather.fcstShortDesc = "";
+        weather.fcstLongDesc = "";
+        Serial.println("Weather Struct data:");
+        Serial.print("Current Temp: "); Serial.println(weather.currTemp);
+        Serial.print("Short Desc: "); Serial.println(weather.currShortDesc);
+      }
     }
   }
   return weather;

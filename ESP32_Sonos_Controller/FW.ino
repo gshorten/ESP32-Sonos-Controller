@@ -15,6 +15,7 @@
    3.2  tweaked saving of firmware
    3.3  tweaks
    3.4  changed splash
+   3.5  put flag in to stop weather updating if button is clicked.
 */
 
 String FirmwareVer = {

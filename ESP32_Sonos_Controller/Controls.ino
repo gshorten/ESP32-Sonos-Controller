@@ -30,6 +30,7 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
            single press action is set.  Then, when the button is clicked the matching action below will
            be executed.
         */
+        g_WeatherUpdateOn = false;    // don't update weather if we have clicked a button
         switch (g_SingleClickAction) {
           case STATE_PLAYING:
             pausePlay();              // call the pause play function
@@ -51,7 +52,7 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
            long press always just brings up the main menu
            change input modes for volume control and encoder button to operate the main menu
         */
-
+        g_WeatherUpdateOn = false;
         changeSonosUnit();
       }
       break;
@@ -178,6 +179,7 @@ void pausePlay() {
     StatusDisplayOn = true;
     statusDisplay();        // immediatly show status.
   }
+  g_WeatherUpdateOn = true;     // turn weather update back on
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

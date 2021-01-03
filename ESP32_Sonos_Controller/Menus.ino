@@ -99,6 +99,7 @@ void exitChangeSonos() {
   g_EncInputMode = STATE_PLAYING;
   g_SingleClickAction = STATE_PLAYING;
   StatusDisplayOn = true;
+  g_WeatherUpdateOn = true;
   statusDisplay();
 }
 
