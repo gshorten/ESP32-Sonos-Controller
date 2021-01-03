@@ -259,7 +259,7 @@ void setup() {
   String textToDisplay[3];
   textToDisplay[0] = "Portable Sonos Control";
   textToDisplay[1] = " Geoff Shorten 2020";
-  if ( g_FirmwareVersion != ""){
+  if ( g_FirmwareVersion != "" || g_FirmwareVersion != "0.0"){
   textToDisplay[2] = "Firmware: ";
   textToDisplay[2] += g_FirmwareVersion;
   }
@@ -312,20 +312,17 @@ void setup() {
   if (g_State == OPERATING) {
     // we are in operating state, do normal init
     getSetup();       // populate CurrentConfig
-
     char dns[30];
     sprintf(dns, "%s.local", conf.getApName());
     Serial.print("dns :"); Serial.println(dns);
     if (MDNS.begin(dns)) {
       Serial.println("MDNS Responder Started");
     }
-
     // check for updates
     if (FirmwareVersionCheck()) {
       firmwareUpdate();
     }
     // Intro splash
-
     makeSonosIPList();
     printOutSonosList();
 

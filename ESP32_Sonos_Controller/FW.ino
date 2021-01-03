@@ -11,10 +11,12 @@
    2.5  save and retrieve firmware version for startup display
    2.6  tweaking saving fw version
    3.0  changed file names for binaries
+   3.1  tweaked saving of firmware version
+   3.2  tweaked saving of firmware
 */
 
 String FirmwareVer = {
-  "3.0"                 //added Firmware version to start up splash
+  "3.2"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {
@@ -102,7 +104,6 @@ int FirmwareVersionCheck(void) {
       return 1;
     }
   }
-
-  NVS.setString("Firmware", g_FirmwareVersion);     // Save the version number
+  NVS.setString("Firmware", payload);     // Save the version number
   return 0;
 }
