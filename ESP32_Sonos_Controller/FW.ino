@@ -10,10 +10,11 @@
    2.4  fixed weather update splash
    2.5  save and retrieve firmware version for startup display
    2.6  tweaking saving fw version
+   3.0  changed file names for binaries
 */
 
 String FirmwareVer = {
-  "2.6"                 //added Firmware version to start up splash
+  "3.0"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {
@@ -102,6 +103,6 @@ int FirmwareVersionCheck(void) {
     }
   }
 
-  NVS.setString("Firmware", g_FirmwareVersion);
+  NVS.setString("Firmware", g_FirmwareVersion);     // Save the version number
   return 0;
 }

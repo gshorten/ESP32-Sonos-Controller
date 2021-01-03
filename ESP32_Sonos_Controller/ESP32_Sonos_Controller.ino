@@ -83,7 +83,7 @@ WiFiClient webClient;
 
 // Firmware update variables
 #define URL_fw_Version "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/bin_version.txt"
-#define URL_fw_Bin "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/ESP32_Sonos_Controller/fw.bin"
+#define URL_fw_Bin "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/ESP32_Sonos_Controller/ESP32_Sonos_Controller.ino.wifi_kit_32.bin"
 
 // Global Variables and Constants
 boolean StatusDisplayOn = true;                 // flag to turn updating of the status display on or off
@@ -101,7 +101,7 @@ long g_EncoderEvent = millis();                  // time that an encoder event s
 boolean g_EncoderInUse = false;
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
-String g_FirmwareVersion;
+String g_FirmwareVersion = "0.0";
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
@@ -259,9 +259,13 @@ void setup() {
   String textToDisplay[3];
   textToDisplay[0] = "Portable Sonos Control";
   textToDisplay[1] = " Geoff Shorten 2020";
+  if ( g_FirmwareVersion != ""){
   textToDisplay[2] = "Firmware: ";
   textToDisplay[2] += g_FirmwareVersion;
-  // textToDisplay[2] += ", Setting up WiFi";
+  }
+  else {
+    textToDisplay[2] = "Checking Firmware";
+  }  
   displayText(textToDisplay);
 
   // battery voltage detection settngs
@@ -292,8 +296,6 @@ void setup() {
   sonosEnc.attachHalfQuad(LEFT_PIN, RIGHT_PIN);   // this seems to generate 2 events for each click, with modified encoder function works well
   // set starting count value after attaching
   sonosEnc.setCount(1000);        // could probably be anything, but can't go negative (its a uint16)
-
-
 
   ledcSetup(0, 5000, 8);
   ledcAttachPin(LED_PIN, 0);
