@@ -19,7 +19,7 @@
 */
 
 String FirmwareVer = {
-  "3.4"                 //added Firmware version to start up splash
+  "3.5"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {
