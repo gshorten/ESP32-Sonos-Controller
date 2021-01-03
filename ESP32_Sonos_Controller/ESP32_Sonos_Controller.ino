@@ -259,13 +259,13 @@ void setup() {
   String textToDisplay[3];
   textToDisplay[0] = "Portable Sonos Control";
   textToDisplay[1] = " Geoff Shorten 2020";
-//  if ( g_FirmwareVersion != ""){
-//  textToDisplay[2] = "Firmware: ";
-//  textToDisplay[2] += g_FirmwareVersion;
-//  }
-//  else {
+  if ( g_FirmwareVersion != ""){
+  textToDisplay[2] = "Firmware: ";
+  textToDisplay[2] += g_FirmwareVersion;
+  }
+  else {
     textToDisplay[2] = "Checking Firmware";
-//  }  
+  }  
   displayText(textToDisplay);
 
   // battery voltage detection settngs
