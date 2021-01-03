@@ -13,11 +13,12 @@
    3.0  changed file names for binaries
    3.1  tweaked saving of firmware version
    3.2  tweaked saving of firmware
-   3.3
+   3.3  tweaks
+   3.4  changed splash
 */
 
 String FirmwareVer = {
-  "3.3"                 //added Firmware version to start up splash
+  "3.4"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {
@@ -105,6 +106,6 @@ int FirmwareVersionCheck(void) {
       return 1;
     }
   }
-  NVS.setString("Firmware", payload);     // Save the version number
+  //NVS.setString("Firmware", payload);     // Save the version number
   return 0;
 }

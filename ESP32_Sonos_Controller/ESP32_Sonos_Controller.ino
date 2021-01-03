@@ -254,18 +254,10 @@ void setup() {
   Heltec.display->flipScreenVertically();
   Heltec.display->setBrightness(255);
 
-  //g_FirmwareVersion = NVS.getString("Firmware");
-
   String textToDisplay[3];
   textToDisplay[0] = "Portable Sonos Control";
   textToDisplay[1] = " Geoff Shorten 2020";
-//  if ( g_FirmwareVersion != "" || g_FirmwareVersion != "0.0"){
-//  textToDisplay[2] = "Firmware: ";
-//  textToDisplay[2] += g_FirmwareVersion;
-//  }
-//  else {
-    textToDisplay[2] = "Checking Firmware";
-//  }  
+  textToDisplay[2] = "Checking Firmware, Getting WiFi";
   displayText(textToDisplay);
 
   // battery voltage detection settngs
