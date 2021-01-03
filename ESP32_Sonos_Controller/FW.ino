@@ -8,10 +8,11 @@
    2.2  minor tweaks
    2.3  tweaking startup displays, sequence
    2.4  fixed weather update splash
+   2.5  save and retrieve firmware version for startup display
 */
 
 String FirmwareVer = {
-  "2.4"                 //added Firmware version to start up splash
+  "2.5"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {
@@ -98,5 +99,6 @@ int FirmwareVersionCheck(void) {
     }
   }
   g_FirmwareVersion = payload;
+  NVS.setString("Firmware", g_FirmwareVersion);
   return 0;
 }

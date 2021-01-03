@@ -248,6 +248,22 @@ void setup() {
   NVS.begin();            // start non volatile storage
   //NVS.eraseAll();      // only use for debugging
 
+  // set up OLED display:
+  Heltec.begin(true /*DisplayEnable Enable*/, true /*Serial Enable*/);
+  Heltec.display->init();
+  Heltec.display->flipScreenVertically();
+  Heltec.display->setBrightness(255);
+
+  g_FirmwareVersion = NVS.getString("Firmware");
+
+  String textToDisplay[3];
+  textToDisplay[0] = "Portable Sonos Control";
+  textToDisplay[1] = " Geoff Shorten 2020";
+  textToDisplay[2] = "Firmware: ";
+  textToDisplay[2] += g_FirmwareVersion;
+  // textToDisplay[2] += ", Setting up WiFi";
+  displayText(textToDisplay);
+
   // battery voltage detection settngs
   adcAttachPin(BATT_PIN);
   analogSetCycles(8);                   // Set number of cycles per sample, default is 8 and provides an optimal result, range is 1 - 255
@@ -277,11 +293,7 @@ void setup() {
   // set starting count value after attaching
   sonosEnc.setCount(1000);        // could probably be anything, but can't go negative (its a uint16)
 
-  // set up OLED display:
-  Heltec.begin(true /*DisplayEnable Enable*/, true /*Serial Enable*/);
-  Heltec.display->init();
-  Heltec.display->flipScreenVertically();
-  Heltec.display->setBrightness(255);
+
 
   ledcSetup(0, 5000, 8);
   ledcAttachPin(LED_PIN, 0);
@@ -311,13 +323,7 @@ void setup() {
       firmwareUpdate();
     }
     // Intro splash
-    String textToDisplay[3];
-    textToDisplay[0] = "Portable Sonos Control";
-    textToDisplay[1] = " Geoff Shorten 2020";
-    textToDisplay[2] = "Firmware: ";
-    textToDisplay[2] += g_FirmwareVersion;
-    // textToDisplay[2] += ", Setting up WiFi";
-    displayText(textToDisplay);
+
     makeSonosIPList();
     printOutSonosList();
 
