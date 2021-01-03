@@ -9,10 +9,11 @@
    2.3  tweaking startup displays, sequence
    2.4  fixed weather update splash
    2.5  save and retrieve firmware version for startup display
+   2.6  tweaking saving fw version
 */
 
 String FirmwareVer = {
-  "2.5"                 //added Firmware version to start up splash
+  "2.6"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {
@@ -83,6 +84,7 @@ int FirmwareVersionCheck(void) {
     payload.trim();
     if (payload.equals(FirmwareVer)) {
       Serial.printf("\nDevice already on latest firmware version:%s\n", FirmwareVer);
+      g_FirmwareVersion = FirmwareVer;
       return 0;
     }
     else
@@ -90,15 +92,16 @@ int FirmwareVersionCheck(void) {
       Serial.println(payload);
       Serial.println("New firmware detected");
       String splash[3];
-      splash[0]= "New Firmware found";
+      splash[0] = "New Firmware found";
       splash[1] = "Please Wait";
       splash[2] = "Updating to latest Firmware, version: ";
       splash[2] +=  payload;
       displayText(splash);
+      g_FirmwareVersion = payload;
       return 1;
     }
   }
-  g_FirmwareVersion = payload;
+
   NVS.setString("Firmware", g_FirmwareVersion);
   return 0;
 }

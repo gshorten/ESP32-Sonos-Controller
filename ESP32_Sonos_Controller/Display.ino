@@ -122,6 +122,8 @@ void updateSonosStatus(long updateInterval, boolean doNow) {
         g_SonosInfo.album = "";
         g_TrackInfoAvailable = false;
       }
+      StatusDisplayOn == true;
+      statusDisplay();
     }
     timeCheck = millis();
     doNow = false;
