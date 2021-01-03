@@ -13,10 +13,11 @@
    3.0  changed file names for binaries
    3.1  tweaked saving of firmware version
    3.2  tweaked saving of firmware
+   3.3
 */
 
 String FirmwareVer = {
-  "3.2"                 //added Firmware version to start up splash
+  "3.3"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {

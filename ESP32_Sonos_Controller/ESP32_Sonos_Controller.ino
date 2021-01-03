@@ -82,7 +82,7 @@ WebConfig conf;
 WiFiClient webClient;
 
 // Firmware update variables
-#define URL_fw_Version "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/bin_version.txt"
+#define URL_fw_Version "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/ESP32_Sonos_Controller/bin_version.txt"
 #define URL_fw_Bin "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/ESP32_Sonos_Controller/ESP32_Sonos_Controller.ino.wifi_kit_32.bin"
 
 // Global Variables and Constants
@@ -259,13 +259,13 @@ void setup() {
   String textToDisplay[3];
   textToDisplay[0] = "Portable Sonos Control";
   textToDisplay[1] = " Geoff Shorten 2020";
-  if ( g_FirmwareVersion != "" || g_FirmwareVersion != "0.0"){
-  textToDisplay[2] = "Firmware: ";
-  textToDisplay[2] += g_FirmwareVersion;
-  }
-  else {
+//  if ( g_FirmwareVersion != "" || g_FirmwareVersion != "0.0"){
+//  textToDisplay[2] = "Firmware: ";
+//  textToDisplay[2] += g_FirmwareVersion;
+//  }
+//  else {
     textToDisplay[2] = "Checking Firmware";
-  }  
+//  }  
   displayText(textToDisplay);
 
   // battery voltage detection settngs
