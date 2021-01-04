@@ -179,7 +179,7 @@ void statusDisplay() {
 int batteryPercent() {
   // reads the battery voltage, returns an int 0 - 100 percent
   // battery voltage constants
-  const long FULL_BATTERY = 3950;       // fully charged, divide by 1000 for mv
+  const long FULL_BATTERY = 4050;       // fully charged, divide by 1000 for mv
   const long EMPTY_BATTERY = 3200;      // fully discharged
   long BATT_RANGE = FULL_BATTERY - EMPTY_BATTERY;
   const float BATT_ADJ_MV = 0.00225;  // to convert battery reading to mv

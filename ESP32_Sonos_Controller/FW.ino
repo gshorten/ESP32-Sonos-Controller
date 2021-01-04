@@ -18,10 +18,11 @@
    3.5  put flag in to stop weather updating if button is clicked.
    3.6  changed flags used to indicate controls in use
    3.7  code cleanup
+   3.8  changed battery settings
 */
 
 String FirmwareVer = {
-  "3.7"                 //added Firmware version to start up splash
+  "3.8"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {
