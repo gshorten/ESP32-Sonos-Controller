@@ -64,7 +64,7 @@ weatherInfo getWeather() {
   String weatherResponse;
   unsigned int updateFreq = 300000;     //update every 10 minutes
   static long lastUpdate = millis();
-  if (g_WeatherUpdateOn) {
+  if (!g_ControlsActive) {
     if (millis() - lastUpdate >= updateFreq || g_firstTime == true) {
       // update weather
       lastUpdate = millis();

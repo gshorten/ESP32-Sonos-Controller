@@ -14,7 +14,7 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
   Serial.print(eventType);
   Serial.print(F("; buttonState: "));
   Serial.println(buttonState);
-
+  g_ControlsActive = true;
   switch (eventType) {
     case AceButton::kEventDoubleClicked: {
         // double click always skips to the next track
@@ -30,7 +30,7 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
            single press action is set.  Then, when the button is clicked the matching action below will
            be executed.
         */
-        g_WeatherUpdateOn = false;    // don't update weather if we have clicked a button
+       
         switch (g_SingleClickAction) {
           case STATE_PLAYING:
             pausePlay();              // call the pause play function
@@ -52,7 +52,7 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
            long press always just brings up the main menu
            change input modes for volume control and encoder button to operate the main menu
         */
-        g_WeatherUpdateOn = false;
+        
         changeSonosUnit();
       }
       break;
@@ -86,6 +86,7 @@ void checkEncoder() {
 void rotaryHandler(int encDirection) {
   // calls the appropriate function when the encoder is turned depending on mode
   // note these are called each time the rotary control moves one step up or down
+ g_ControlsActive = true;
   switch (g_EncInputMode) {
     case STATE_PLAYING:
       setSonosVolume(encDirection);
@@ -180,6 +181,7 @@ void pausePlay() {
     statusDisplay();        // immediatly show status.
   }
   g_WeatherUpdateOn = true;     // turn weather update back on
+  g_ControlsActive = true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -188,8 +190,10 @@ void encoderTimer() {
   long encoderTimeOut = 2000;    // time after last encoder action that other functions will be blocked
   if (millis() - g_EncoderEvent <= encoderTimeOut) {
     g_EncoderInUse = true;
+    g_ControlsActive = true;
   }
   else if (millis() - g_EncoderEvent >= encoderTimeOut) {
     g_EncoderInUse = false;
+    g_ControlsActive = false;
   }
 }
