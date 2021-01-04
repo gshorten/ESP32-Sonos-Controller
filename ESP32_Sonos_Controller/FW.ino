@@ -19,10 +19,11 @@
    3.6  changed flags used to indicate controls in use
    3.7  code cleanup
    3.8  changed battery settings
+   3.9  tweaked battery settings
 */
 
 String FirmwareVer = {
-  "3.8"                 //added Firmware version to start up splash
+  "3.9"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {
