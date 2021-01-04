@@ -30,7 +30,6 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
            single press action is set.  Then, when the button is clicked the matching action below will
            be executed.
         */
-       
         switch (g_SingleClickAction) {
           case STATE_PLAYING:
             pausePlay();              // call the pause play function
@@ -180,7 +179,7 @@ void pausePlay() {
     StatusDisplayOn = true;
     statusDisplay();        // immediatly show status.
   }
-  g_WeatherUpdateOn = true;     // turn weather update back on
+ 
   g_ControlsActive = true;
 }
 
@@ -189,11 +188,11 @@ void encoderTimer() {
   // sets a flag that lets other functions know that the encoder is in use
   long encoderTimeOut = 2000;    // time after last encoder action that other functions will be blocked
   if (millis() - g_EncoderEvent <= encoderTimeOut) {
-    g_EncoderInUse = true;
+    g_ControlsActive = true;
     g_ControlsActive = true;
   }
   else if (millis() - g_EncoderEvent >= encoderTimeOut) {
-    g_EncoderInUse = false;
+    g_ControlsActive = false;
     g_ControlsActive = false;
   }
 }

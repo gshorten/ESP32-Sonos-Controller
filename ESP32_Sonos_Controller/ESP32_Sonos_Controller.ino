@@ -98,11 +98,9 @@ const int OPERATING = 0;
 const int SETUP = 1;
 boolean g_TrackInfoAvailable = false;
 long g_EncoderEvent = millis();                  // time that an encoder event started
-boolean g_EncoderInUse = false;
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 String g_FirmwareVersion = "0.0";
-boolean g_WeatherUpdateOn = true;
 boolean g_ControlsActive = false;
 
 // struct to hold  track and playstate information on the active unit
@@ -374,7 +372,7 @@ void loop() {
     server.handleClient();
   }
   else if (g_State == OPERATING) {
-    if (!g_EncoderInUse) {             // only get weather, time, update display if rotary contoller is not active
+    if (!g_ControlsActive) {             // only get weather, time, update display if rotary contoller is not active
       g_Weather = getWeather();        // get the weather, saves info in struct g_Weather
       updateSonosStatus(4000, !UPDATE_NOW);
       timeClient.update();             // checks for current time (used in status display)
