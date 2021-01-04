@@ -21,10 +21,11 @@
    3.8  changed battery settings
    3.9  tweaked battery settings
    3.10 code cleanup
+   3.11 code cleanup
 */
 
 String FirmwareVer = {
-  "3.10"                 //added Firmware version to start up splash
+  "3.11"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {

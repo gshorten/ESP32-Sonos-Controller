@@ -1,3 +1,4 @@
+// Sonos related functions
 
 void makeSonosIPList () {
   // construct sonos list from the conf json file

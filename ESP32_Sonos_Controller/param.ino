@@ -1,3 +1,4 @@
+// Parameter setup for web configuration page, function to retrieve configuration info
 
 void getSetup() {
   // gets saved settings, puts them in CurrentConfig

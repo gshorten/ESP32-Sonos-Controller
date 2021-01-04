@@ -1,5 +1,5 @@
-
-/*  Sonos control functions using rotary encoder and pushbutton
+/*  
+control functions using rotary encoder and pushbutton
 */
 
 void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonState) {

@@ -6,7 +6,7 @@
     Fixes / bugs / features:
       - Add an "about" screen that shows information - ip of the control, firmware version.
       - Use ReactESP library to improve responsiveness of the pushbutton and volume control.  Pretty major change though. Fork it.
-      - On startup, if cannot connnect to active sonos unit, go to menu to pick a new one ,
+      - On startup, if cannot connnect to active sonos unit, go to menu to pick a new one, instead of going into setup mode?
       - change OLED display function to display either 3 or 4 lines, centered or not, diff. sizes
       - add method to  SonosUPnP to play sonos favorite  (difficult)
       - add method to  SonosUPnP to get meta data so that title
@@ -20,11 +20,9 @@
        - add web based configuration option, ie go to a web page to define wifi connection, sonos  units, etc.
           program will look for and load these on startup.
        - cache sonos status to improve responsiveness of the volume control and pause/ play.  See ReactESP alternative in TODO
-
         - put scheduling for the status display update in a seperate function, this will
                       enable the status display to be shown on demand.
       - add function to select weather city
-
        - implement flag to stop sonos status display refresh or weather check,
                       display update while we are changing volume or in a menu
       - scan for available wifi networks
@@ -34,13 +32,13 @@
       - add battery % indicator?
 
   Apologies for all the global variables and constants, a consequence of not using classes :-) , but there's
-  not actually any more code, it's just all in the .ino file.  I will clean up and make OOP later!
+  not actually any more code, it's just all in the .ino files.  I will clean up and make OOP later!
   Conventions:
       global and local constants    ALL_UPPER_CASE
-      global variables              g_camelCase
+      global variables              g_CamelCase
       local variables               regularCamelCase
       function names                regularCamelCase
-      functions are seperated with /////////////////////////////////////////////////////////
+      functions are (sometimes) seperated with /////////////////////////////////////////////////////////
 */
 
 #include <MicroXPath.h>         // used by SonosUPnP
@@ -87,15 +85,13 @@ WiFiClient webClient;
 
 // Global Variables and Constants
 boolean StatusDisplayOn = true;                 // flag to turn updating of the status display on or off
-//boolean SelectionMade = false;                // when not in pause play mode indicates a selection has been made
 long g_TimeDisplayStarted;
-// ie when changing volume, other tasks, we want to stop updating the status display, otherwise do it automatically.
 boolean SHOW_SPLASH = true;
 boolean g_firstTime = true;           // flag so first time we run function we update the weather
 boolean UPDATE_NOW = true;            // force update of sonos information
-int g_State = 0;                      // Operating state, normal operating or setup, switches wifi between ap and client
 const int OPERATING = 0;
 const int SETUP = 1;
+int g_State = OPERATING;
 boolean g_TrackInfoAvailable = false;
 long g_EncoderEvent = millis();                  // time that an encoder event started
 boolean g_LowBattery = false;

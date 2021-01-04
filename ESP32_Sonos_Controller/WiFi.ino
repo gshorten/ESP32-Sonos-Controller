@@ -1,8 +1,4 @@
-/*
-   Functions to set and save the wifi ssid and password to Eprom (so it's not hard coded)
-*/
-
-/////////////////////////////////////////////////////////////////////////////
+// init wifi
 
 boolean initWiFi() {
   //connects to the wifi network

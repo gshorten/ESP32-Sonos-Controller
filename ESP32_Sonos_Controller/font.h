@@ -1,3 +1,5 @@
+// Roboto font definition, seems to work well with the OLED display
+
 // Created by http://oleddisplay.squix.ch/ Consider a donation
 // In case of problems make sure that you are using the font file with the correct version!
 const uint8_t Roboto_Condensed_12[] PROGMEM = {
