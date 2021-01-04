@@ -43,7 +43,7 @@ void showStatus(int seconds) {
   // shows the staus display periodically
   static long lastTimeChecked = millis();     // last time we checked
   const long checkFreq = seconds * 1000;              // how often we check and  update the display
-  if (millis() - lastTimeChecked > checkFreq && StatusDisplayOn == true && g_ControlsActive == false) {
+  if (millis() - lastTimeChecked > checkFreq && StatusDisplayOn == true && !g_ControlsActive) {
     // update the status display
     statusDisplay();
     lastTimeChecked = millis();
@@ -52,7 +52,6 @@ void showStatus(int seconds) {
 ///////////////////////////////////////////////////////////////////////////
 void DisplayTimeout(int timeout) {    // timeout is in minutes
   /*Times out the status display, turns it off after a period of inactivity.  This saves the OLEDS
-
   */
   const long displayTimeout = timeout * 60000;         // time we let display stay on, in milliseconds
   //static long timeDisplayStarted = millis();
@@ -66,7 +65,6 @@ void DisplayTimeout(int timeout) {    // timeout is in minutes
   }
   else {
     g_TimeDisplayStarted = millis();
-    //StatusDisplayOn = true;
   }
 }
 
@@ -179,7 +177,7 @@ void statusDisplay() {
 int batteryPercent() {
   // reads the battery voltage, returns an int 0 - 100 percent
   // battery voltage constants
-  const long FULL_BATTERY = 4150;       // fully charged, divide by 1000 for mv
+  const long FULL_BATTERY = 4100;       // fully charged, divide by 1000 for mv
   const long EMPTY_BATTERY = 3200;      // fully discharged
   long BATT_RANGE = FULL_BATTERY - EMPTY_BATTERY;
   const float BATT_ADJ_MV = 0.00225;  // to convert battery reading to mv

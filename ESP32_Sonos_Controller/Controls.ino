@@ -124,9 +124,7 @@ void setSonosVolume(int encDirection) {
   const byte VOL_CHANGE_UP = 4;
   const byte VOL_CHANGE_DOWN = 4;      // reduces volume more quickly
 
-  // cache the volume of the active unit
-
-  if (encDirection == CW) {
+   if (encDirection == CW) {
     newVolume = oldVolume + VOL_CHANGE_UP;
     if (newVolume >= 100) {             // check high, low limits, if reading is >100 or less than 0 correct
       newVolume = 100;
@@ -180,7 +178,7 @@ void pausePlay() {
     statusDisplay();        // immediatly show status.
   }
  
-  g_ControlsActive = true;
+  g_ControlsActive = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -189,10 +187,8 @@ void encoderTimer() {
   long encoderTimeOut = 2000;    // time after last encoder action that other functions will be blocked
   if (millis() - g_EncoderEvent <= encoderTimeOut) {
     g_ControlsActive = true;
-    g_ControlsActive = true;
   }
   else if (millis() - g_EncoderEvent >= encoderTimeOut) {
-    g_ControlsActive = false;
     g_ControlsActive = false;
   }
 }

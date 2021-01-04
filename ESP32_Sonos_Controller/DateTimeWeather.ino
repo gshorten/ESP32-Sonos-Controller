@@ -64,7 +64,7 @@ weatherInfo getWeather() {
   String weatherResponse;
   unsigned int updateFreq = 300000;     //update every 10 minutes
   static long lastUpdate = millis();
-  if (!g_ControlsActive) {
+  if (!g_ControlsActive) {        // don't check for weather if the controls are active
     if (millis() - lastUpdate >= updateFreq || g_firstTime == true) {
       // update weather
       lastUpdate = millis();
@@ -114,51 +114,4 @@ weatherInfo getWeather() {
     }
   }
   return weather;
-}
-
-void scrollLocations(int encDirection) {
-  // scrolls through weather cities when encoder state is SCROLL_LOCATIONS
-  static int location = -1;
-  if (encDirection == CW) {
-    location++;
-    if (location > NUM_LOCATIONS - 1) {
-      location = 0;         // wrap around
-    }
-  }
-  else if (encDirection == CCW) {
-    location--;
-    if (location < 0) {
-      location = NUM_LOCATIONS - 1;
-    }
-  }
-  g_currSelectedLocation = location;
-  // display location
-  String locationDisplay[3];
-  int lineIndex;
-  // FIRST LINE - shows item before the selected item
-  if (location == 0) {
-    lineIndex = NUM_LOCATIONS - 1;       // if menuItem is the last item in the list the first display line is the previous item
-  }
-  else {
-    lineIndex = location - 1;      // if menu item is not at 0 then show previous item
-  }
-  locationDisplay[0] = g_Locations[lineIndex][0];   // display location name
-
-  // SECOND LINE : shows the selected menu item
-  lineIndex = location;
-  String middleLine = g_Locations[lineIndex][0];   // middle line shows the selected item
-  middleLine.toUpperCase();
-  locationDisplay[1] = ">> " + middleLine + " <<";
-
-  // THIRD LINE: shows the next item in the list
-  if (location == NUM_LOCATIONS - 1) {   //if menuItem is at the top of the list,
-    lineIndex = 0;                  // then wrap to the bottom for the third line
-  }
-  else {
-    lineIndex++;        // else third line shows next item in the list
-  }
-  locationDisplay[2] = g_Locations[lineIndex][0];
-
-  displayText(locationDisplay);
-  delay(100);
 }

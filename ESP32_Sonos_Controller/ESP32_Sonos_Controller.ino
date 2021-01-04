@@ -101,7 +101,7 @@ long g_EncoderEvent = millis();                  // time that an encoder event s
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 String g_FirmwareVersion = "0.0";
-boolean g_ControlsActive = false;
+boolean g_ControlsActive = false;             // flag, indicates that rotary encoder or pushbutton is in use
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
