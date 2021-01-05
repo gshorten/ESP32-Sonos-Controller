@@ -60,7 +60,6 @@ void updateSonosStatus(long updateInterval) {
 
 void makeSonosIPList () {
   // construct sonos list from the conf json file
-  // SonosUnit g_SonosUnits[NUM_SONOS_UNITS]
   int count = 0;
   for (int x = 3; x < (NUM_SONOS_UNITS * 2) + 3; x = x + 2) {
     // get name

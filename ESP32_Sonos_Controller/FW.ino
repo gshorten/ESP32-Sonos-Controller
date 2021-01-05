@@ -24,10 +24,11 @@
    3.11 code cleanup
    3.12 fix display timeout
    3.13 code cleanup
+   3.14 debug button click
 */
 
 String FirmwareVer = {
-  "3.13"                 //added Firmware version to start up splash
+  "3.14"                 
 };
 
 void firmwareUpdate(void) {

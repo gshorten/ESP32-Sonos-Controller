@@ -270,8 +270,12 @@ void setup() {
   buttonConfig->setFeature(ButtonConfig::kFeatureClick);          // enable single click
   buttonConfig->setFeature(ButtonConfig::kFeatureDoubleClick);    // enable double click
   buttonConfig->setFeature(ButtonConfig::kFeatureSuppressClickBeforeDoubleClick);  // makes both single and double click work
+  buttonConfig->setFeature(ButtonConfig::kFeatureSuppressAfterClick);
+  buttonConfig->setFeature(ButtonConfig::kFeatureSuppressAfterDoubleClick);
   buttonConfig->setFeature(ButtonConfig::kFeatureLongPress);
   //buttonConfig->setFeature(ButtonConfig::kFeatureRepeatPress);    // probably don't need this
+  //encButton.setDebounceDelay(30);     // increased from default of 20 ms
+ // encButton.setDoubleClickDelay(500);   // increased from default of 400 ms
 
   // set up the encoder
   // Enable the weak pull up resistors

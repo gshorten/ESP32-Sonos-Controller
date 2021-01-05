@@ -16,14 +16,8 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
   Serial.println(buttonState);
   g_ControlsActive = true;
   switch (eventType) {
-    case AceButton::kEventDoubleClicked: {
-        // double click always skips to the next track
-        g_sonos.skip(g_ActiveUnit, SONOS_DIRECTION_FORWARD);
-        String splash[3] = {"Skipping", "Forward To The", "Next Track"};
-        displayText(splash);
-      }
-      break;
-    case AceButton::kEventClicked: {
+    case AceButton::kEventClicked:
+    case AceButton::kEventReleased: {
         /*
            determines what happens with a single click.  The global g_SingleClickAction is set when a menu item
            item is shown on the main menu, or on a sub menu (such as select unit), ie as the main menu is scrolled the
@@ -44,6 +38,13 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
             pausePlay();          // calling the pause play function is the default.
             break;
         }
+      }
+      break;
+      case AceButton::kEventDoubleClicked: {
+        // double click always skips to the next track
+        g_sonos.skip(g_ActiveUnit, SONOS_DIRECTION_FORWARD);
+        String splash[3] = {"Skipping", "Forward To The", "Next Track"};
+        displayText(splash);
       }
       break;
     case AceButton::kEventLongPressed: {
