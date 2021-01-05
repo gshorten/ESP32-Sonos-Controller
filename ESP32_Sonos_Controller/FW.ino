@@ -23,10 +23,11 @@
    3.10 code cleanup
    3.11 code cleanup
    3.12 fix display timeout
+   3.13 code cleanup
 */
 
 String FirmwareVer = {
-  "3.12"                 //added Firmware version to start up splash
+  "3.13"                 //added Firmware version to start up splash
 };
 
 void firmwareUpdate(void) {

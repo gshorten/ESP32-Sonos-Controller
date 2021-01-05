@@ -119,7 +119,6 @@ void setSonosVolume(int encDirection) {
   //static int oldVolume = g_sonos.getVolume(g_ActiveUnit); // save the old position of the encoder
   //use cached volume instead
   static int oldVolume =  g_SonosInfo.volume;
-  //delay(25);            // wait for response
   Serial.print("Old Volume: "); Serial.println(oldVolume);
   int newVolume;
   String textToDisplay[3];

@@ -2,7 +2,7 @@
    Display related functions
 */
 
-void displayText(String lines[3], int numLines) {
+void displayText(String lines[3], String Line4, int numLines) {
   // displays 3 rows of text, centered.
   const byte dispWidth = 128;                  // how many characters can be displayed
   const long charWidth = 6.5;                 // typical character width
@@ -70,64 +70,7 @@ void DisplayTimeout(int timeout) {    // timeout is in minutes
 
 /////////////////////////////////////////////////////////////////////////////
 
-void updateSonosStatus(long updateInterval, boolean doNow) {
-  // gets play state of the Sonos unit, updates global struct g_SonosInfo
-  static long timeCheck = millis();
-  long now = millis();
-  if (!g_ControlsActive) {
-    if ( now - timeCheck > updateInterval || doNow == true) {
-      Serial.println("Getting data on current sonos unit");
-      // get volume
-      g_SonosInfo.volume = g_sonos.getVolume(g_ActiveUnit);      // get the volume of current unit
-      // get playstate
-      byte playerState = g_sonos.getState(g_ActiveUnit);    // get playstate
-      switch (playerState) {
-        case SONOS_STATE_PLAYING:
-          g_SonosInfo.playState = "Playing";
-          break;
-        case SONOS_STATE_PAUSED:
-          g_SonosInfo.playState = "Paused";
-          break;
-        case SONOS_STATE_STOPPED:
-          g_SonosInfo.playState = "Stopped";
-          break;
-        default:
-          g_SonosInfo.playState = "Unknown";
-          break;
-      }
-      if (g_SonosInfo.playState == "Playing") {
-        // only get track info if the unit is playing
-        // get source
-        SonosInfo info;
-        info = g_sonos.getSonosInfo(g_ActiveUnit);
-        g_SonosInfo.source = String(info.source);
-        Serial.print("Source: "); Serial.println(g_SonosInfo.source);
-        if (   g_SonosInfo.source == SPOTIFY_SCHEME
-               || g_SonosInfo.source == SPOTIFYSTATION_SCHEME
-               || g_SonosInfo.source == HTTP_SCHEME
-               || g_SonosInfo.source == FILE_SCHEME
-               || g_SonosInfo.source == QUEUE_SCHEME ) {
-          // only these sources seem to have full track information available
-          FullTrackInfo info = g_sonos.getFullTrackInfo(g_ActiveUnit);
-          g_SonosInfo.title = String(info.title);
-          g_SonosInfo.creator = String(info.creator);
-          g_SonosInfo.album = String(info.album);
-          g_TrackInfoAvailable = true;
-        }
-        else {
-          g_SonosInfo.title = "";
-          g_SonosInfo.creator = "";
-          g_SonosInfo.album = "";
-          g_TrackInfoAvailable = false;
-        }
-        StatusDisplayOn == true;
-        statusDisplay();
-      }
-      timeCheck = millis();
-      doNow = false;
-    }
-  }
-}
+
 
 void statusDisplay() {
   /*

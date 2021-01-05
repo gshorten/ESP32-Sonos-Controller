@@ -84,20 +84,18 @@ WiFiClient webClient;
 #define URL_fw_Bin "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/ESP32_Sonos_Controller/ESP32_Sonos_Controller.ino.wifi_kit_32.bin"
 
 // Global Variables and Constants
-boolean StatusDisplayOn = true;                 // flag to turn updating of the status display on or off
+boolean StatusDisplayOn = true;       // flag to turn updating of the status display on or off
 long g_TimeDisplayStarted;
-boolean SHOW_SPLASH = true;
 boolean g_firstTime = true;           // flag so first time we run function we update the weather
-boolean UPDATE_NOW = true;            // force update of sonos information
 const int OPERATING = 0;
 const int SETUP = 1;
 int g_State = OPERATING;
 boolean g_TrackInfoAvailable = false;
-long g_EncoderEvent = millis();                  // time that an encoder event started
+long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 String g_FirmwareVersion = "0.0";
-boolean g_ControlsActive = false;             // flag, indicates that rotary encoder or pushbutton is in use
+boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
@@ -134,7 +132,7 @@ SonosUnit g_SonosUnits[NUM_SONOS_UNITS];  // array of sonos unit ipaddresses and
 int g_CurrentUnitNum = 0;                 //when selecting the unit with volume control, tracks the g_SonosUnits selected
 int g_numOfActiveUnits;                   //number of active sonos units
 IPAddress NULL_IP = (0, 0, 0, 0);
-int g_SonosMenuLength; // string array for scrolling through the list has space for additional options
+int g_SonosMenuLength;                    // string array for scrolling through the list has space for additional options
 String g_SonosMenuList[NUM_SONOS_UNITS + 2];     // String array for the list of sonos  units + options for scrolling
 
 // struct to save configuration data
@@ -157,7 +155,7 @@ typedef struct {
   int fcstTemp;             //forecast temperature( 4 hours out)
   int currWind;             //current wind
   int fcstWind;             // forecast wind
-  String currShortDesc;     //current desc
+  String currShortDesc;     //current weather description
   String fcstShortDesc;
   String currLongDesc;
   String fcstLongDesc;
@@ -189,8 +187,7 @@ const int SERIAL_DATA_THRESHOLD_MS = 500;
 #define SERIAL_ERROR_TIMEOUT "E: Serial"
 #define ETHERNET_ERROR_DHCP "E: DHCP"
 #define ETHERNET_ERROR_CONNECT "E: Connect"
-// unsigned long g_sonosLastStateUpdate = 0;
-// unsigned long g_serialDataReceived_ms;
+
 
 IPAddress g_ActiveUnit;       // the current sonos unit we are controlling.
 String g_ActiveUnitName;      // active unit name
@@ -218,7 +215,7 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType,
 weatherInfo getWeather();
 void pausePlay();
 void checkEncoder();
-void displayText(String lines[3], int numLines = 3);
+void displayText(String lines[3], String line4 = "" ,int numLines = 3);
 void scanNetworks(int numToScan);
 boolean checkSSID(String wifiSSID);
 void getSonosUnits(boolean showSplash = false);
@@ -226,9 +223,8 @@ void SaveConfig();
 void RetrieveConfig();
 void unitSelectClick();
 void saveSonos();
-// void exitMainMenu(boolean displaySplash = true);
 void showStatus(int seconds = 2);
-void updateSonosStatus(long updateInterval = 3000, boolean doNow = false);
+void updateSonosStatus(long updateInterval = 3000);
 String configString();
 void firmwareUpdate();
 int FirmwareVersionCheck();
@@ -242,7 +238,7 @@ void setup() {
   }
 
   NVS.begin();            // start non volatile storage
-  //NVS.eraseAll();      // only use for debugging
+  //NVS.eraseAll();       // only use for debugging
 
   // set up OLED display:
   Heltec.begin(true /*DisplayEnable Enable*/, true /*Serial Enable*/);
@@ -275,7 +271,7 @@ void setup() {
   buttonConfig->setFeature(ButtonConfig::kFeatureDoubleClick);    // enable double click
   buttonConfig->setFeature(ButtonConfig::kFeatureSuppressClickBeforeDoubleClick);  // makes both single and double click work
   buttonConfig->setFeature(ButtonConfig::kFeatureLongPress);
-  buttonConfig->setFeature(ButtonConfig::kFeatureRepeatPress);    // probably don't need this
+  //buttonConfig->setFeature(ButtonConfig::kFeatureRepeatPress);    // probably don't need this
 
   // set up the encoder
   // Enable the weak pull up resistors
@@ -310,14 +306,9 @@ void setup() {
     if (FirmwareVersionCheck()) {
       firmwareUpdate();
     }
-    // Intro splash
+    
     makeSonosIPList();
     printOutSonosList();
-
-    // get weather
-    // String weatherUpdate[3] = {"Getting current ", "weather conditions", "    for "};
-    //weatherUpdate[2] += CurrentConfig.locationName;
-    //displayText(weatherUpdate);
 
     // set up the NTP time client to get current date and time
     timeClient.begin();        // start time client
@@ -370,7 +361,7 @@ void loop() {
   else if (g_State == OPERATING) {
     if (!g_ControlsActive) {             // only get weather, time, update display if rotary contoller is not active
       g_Weather = getWeather();        // get the weather, saves info in struct g_Weather
-      updateSonosStatus(4000, !UPDATE_NOW);
+      updateSonosStatus(4000);
       timeClient.update();             // checks for current time (used in status display)
       showStatus(3);                   // show the status display
     }
