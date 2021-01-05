@@ -29,6 +29,10 @@
    4.0  change to how track title, artist, creator is retrieved and displayed
 */
 
+String FirmwareVer = {
+  "4.0"
+  };        // firmware version, must match version_bin.txt file
+
 void firmwareUpdate(void) {
   WiFiClientSecure client;
   client.setCACert(rootCACertificate);

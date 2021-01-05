@@ -96,7 +96,7 @@ boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 String g_FirmwareVersion = "0.0";
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = {"4.0"};        // firmware version, must match version_bin.txt file
+
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
