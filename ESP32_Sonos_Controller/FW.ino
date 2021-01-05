@@ -27,10 +27,11 @@
    3.14 debug button click
    3.15 still debugging button click
    4.0  change to how track title, artist, creator is retrieved and displayed
+   4.1  tweaked button presses
 */
 
 String FirmwareVer = {
-  "4.0"
+  "4.1"
   };        // firmware version, must match version_bin.txt file
 
 void firmwareUpdate(void) {

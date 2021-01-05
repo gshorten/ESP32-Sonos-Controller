@@ -17,8 +17,8 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
   g_ControlsActive = true;
   switch (eventType) {
     // single click
-    case AceButton::kEventClicked:
-    case AceButton::kEventReleased: {
+    case AceButton::kEventClicked:{
+    //case AceButton::kEventReleased: {
         /*
            determines what happens with a single click.  The global g_SingleClickAction is set when a menu item
            item is shown on the main menu, or on a sub menu (such as select unit), ie as the main menu is scrolled the
