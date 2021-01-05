@@ -16,6 +16,7 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
   Serial.println(buttonState);
   g_ControlsActive = true;
   switch (eventType) {
+    // single click
     case AceButton::kEventClicked:
     case AceButton::kEventReleased: {
         /*

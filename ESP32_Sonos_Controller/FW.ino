@@ -25,10 +25,11 @@
    3.12 fix display timeout
    3.13 code cleanup
    3.14 debug button click
+   3.15 still debugging button click
 */
 
 String FirmwareVer = {
-  "3.14"                 
+  "3.15"                 
 };
 
 void firmwareUpdate(void) {

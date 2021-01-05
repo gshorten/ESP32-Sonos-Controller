@@ -267,7 +267,7 @@ void setup() {
   ButtonConfig* buttonConfig = encButton.getButtonConfig();
   buttonConfig->setEventHandler(buttonEvent);               // the handler for button events
   // enable button features:
-  buttonConfig->setFeature(ButtonConfig::kFeatureClick);          // enable single click
+  //buttonConfig->setFeature(ButtonConfig::kFeatureClick);          // enable single click
   buttonConfig->setFeature(ButtonConfig::kFeatureDoubleClick);    // enable double click
   buttonConfig->setFeature(ButtonConfig::kFeatureSuppressClickBeforeDoubleClick);  // makes both single and double click work
   buttonConfig->setFeature(ButtonConfig::kFeatureSuppressAfterClick);
@@ -365,7 +365,7 @@ void loop() {
   else if (g_State == OPERATING) {
     if (!g_ControlsActive) {             // only get weather, time, update display if rotary contoller is not active
       g_Weather = getWeather();        // get the weather, saves info in struct g_Weather
-      updateSonosStatus(4000);
+      updateSonosStatus(3000);
       timeClient.update();             // checks for current time (used in status display)
       showStatus(3);                   // show the status display
     }
