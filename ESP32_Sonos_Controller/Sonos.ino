@@ -25,31 +25,39 @@ void updateSonosStatus(long updateInterval) {
           g_SonosInfo.playState = "Unknown";
           break;
       }
+      // get source and URI
+      char uri[50] = "";
+      TrackInfo track = g_sonos.getTrackInfo(g_ActiveUnit, uri, sizeof(uri));
+      g_SonosInfo.uri = String(track.uri);
+      g_SonosInfo.source  = g_sonos.getSourceFromURI(track.uri);
+      // get full track info
+      FullTrackInfo info;
+      info = g_sonos.getFullTrackInfo(g_ActiveUnit);
+      g_SonosInfo.album = info.album;
+      g_SonosInfo.title = info.title;
+      g_SonosInfo.creator = info.creator;
+
       if (g_SonosInfo.playState == "Playing") {
-        // only get track info if the unit is playing
-        // get source
-        SonosInfo info;
-        info = g_sonos.getSonosInfo(g_ActiveUnit);
-        g_SonosInfo.source = String(info.source);
         Serial.print("Source: "); Serial.println(g_SonosInfo.source);
-        if (   g_SonosInfo.source == SPOTIFY_SCHEME
-               || g_SonosInfo.source == SPOTIFYSTATION_SCHEME
-               || g_SonosInfo.source == HTTP_SCHEME
-               || g_SonosInfo.source == FILE_SCHEME
-               || g_SonosInfo.source == QUEUE_SCHEME ) {
-          // only these sources seem to have full track information available
-          FullTrackInfo info = g_sonos.getFullTrackInfo(g_ActiveUnit);
+//        if (   g_SonosInfo.source == SPOTIFY_SCHEME
+//               || g_SonosInfo.source == SPOTIFYSTATION_SCHEME
+//               || g_SonosInfo.source == HTTP_SCHEME
+//               || g_SonosInfo.source == FILE_SCHEME
+//               || g_SonosInfo.source == QUEUE_SCHEME ) {
+//          // only these sources seem to have full track information available
+         
           g_SonosInfo.title = String(info.title);
           g_SonosInfo.creator = String(info.creator);
           g_SonosInfo.album = String(info.album);
           g_TrackInfoAvailable = true;
-        }
-        else {
-          g_SonosInfo.title = "";
-          g_SonosInfo.creator = "";
-          g_SonosInfo.album = "";
-          g_TrackInfoAvailable = false;
-        }
+//        }
+        //        else {
+        //          g_SonosInfo.title = "";
+        //          g_SonosInfo.creator = "";
+        //          g_SonosInfo.album = "";
+        //          g_TrackInfoAvailable = false;
+        //        }
+        g_TrackInfoAvailable = true;
         StatusDisplayOn == true;
         statusDisplay();
       }
@@ -81,17 +89,17 @@ void makeSonosIPList () {
   makeSonosMenuList();
 }
 
-void makeSonosMenuList(){
-  // make a list just for the sonos selection function, it includes options that are not 
+void makeSonosMenuList() {
+  // make a list just for the sonos selection function, it includes options that are not
   // sonos units such as cancel and setup
-  for (int i = 0; i < g_SonosMenuLength ; i++){
+  for (int i = 0; i < g_SonosMenuLength ; i++) {
     g_SonosMenuList[i] = g_SonosUnits[i].UnitName;
   }
-  g_SonosMenuList[g_SonosMenuLength -2] = "Cancel";
-  g_SonosMenuList[g_SonosMenuLength -1] = "Setup";
+  g_SonosMenuList[g_SonosMenuLength - 2] = "Cancel";
+  g_SonosMenuList[g_SonosMenuLength - 1] = "Setup";
   // check list
-  for (int i =0; i < g_SonosMenuLength ; i++) {
-    Serial.print(" Select Sonos Menu item: ");Serial.println(g_SonosMenuList[i]);
+  for (int i = 0; i < g_SonosMenuLength ; i++) {
+    Serial.print(" Select Sonos Menu item: "); Serial.println(g_SonosMenuList[i]);
   }
 }
 

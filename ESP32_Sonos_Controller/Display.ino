@@ -95,7 +95,7 @@ void statusDisplay() {
     displayLines[0] = g_ActiveUnitName + " " + g_SonosInfo.playState + " Vol: " + g_SonosInfo.volume;
     displayLines[1] = String(g_Weather.currTemp) + "c  " + g_Weather.currShortDesc + " "
                       + hourMinutes + " b:" + battPercent + "%";
-    if (g_TrackInfoAvailable) {
+    if (g_TrackInfoAvailable == true) {
       // we have track information, so display it
       displayLines[2] = g_SonosInfo.creator;
       displayLines[2] += " : ";
@@ -110,8 +110,11 @@ void statusDisplay() {
     Serial.println(displayLines[0]);
     Serial.println(displayLines[1]);
     Serial.println(displayLines[2]);
+    Serial.print("Track URI: "); Serial.println(g_SonosInfo.uri);
+    Serial.print("Track Source: "); Serial.println(g_SonosInfo.source);
     Serial.println(" -------------------------------------------------------");
     Serial.println();
+
     displayText(displayLines);
     //g_TimeDisplayStarted = millis();
   }

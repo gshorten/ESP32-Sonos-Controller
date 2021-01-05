@@ -96,6 +96,7 @@ boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 String g_FirmwareVersion = "0.0";
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
+String FirmwareVer = {"4.0"};        // firmware version, must match version_bin.txt file
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
@@ -105,6 +106,7 @@ typedef struct {
   String title;
   String creator;
   String album;
+  String uri;
 } SonosState;
 SonosState g_SonosInfo;
 
@@ -249,7 +251,7 @@ void setup() {
   String textToDisplay[3];
   textToDisplay[0] = "Portable Sonos Control";
   textToDisplay[1] = " Geoff Shorten 2020";
-  textToDisplay[2] = "Checking Firmware, Getting WiFi";
+  textToDisplay[2] = "Connecting to WiFi, Checking Firmware";
   displayText(textToDisplay);
 
   // battery voltage detection settngs
