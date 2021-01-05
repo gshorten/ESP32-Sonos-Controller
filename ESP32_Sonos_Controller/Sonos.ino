@@ -33,9 +33,9 @@ void updateSonosStatus(long updateInterval) {
       // get full track info
       FullTrackInfo info;
       info = g_sonos.getFullTrackInfo(g_ActiveUnit);
-      g_SonosInfo.album = info.album;
-      g_SonosInfo.title = info.title;
-      g_SonosInfo.creator = info.creator;
+//      g_SonosInfo.album = info.album;
+//      g_SonosInfo.title = info.title;
+//      g_SonosInfo.creator = info.creator;
 
       if (g_SonosInfo.playState == "Playing") {
         Serial.print("Source: "); Serial.println(g_SonosInfo.source);
