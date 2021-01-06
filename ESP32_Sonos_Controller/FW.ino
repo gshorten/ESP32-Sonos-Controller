@@ -28,10 +28,11 @@
    3.15 still debugging button click
    4.0  change to how track title, artist, creator is retrieved and displayed
    4.1  tweaked button presses
+   4.2  display timeout stopped while unit is paused and encoder is turned
 */
 
 String FirmwareVer = {
-  "4.1"
+  "4.2"
   };        // firmware version, must match version_bin.txt file
 
 void firmwareUpdate(void) {

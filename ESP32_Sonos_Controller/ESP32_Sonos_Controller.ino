@@ -373,7 +373,7 @@ void loop() {
     }
     checkEncoder();                  // check to see if encoder has turned
     encButton.check();               // checks for button presses
-    DisplayTimeout(1);               // times out display so OLED does not fade. timeout parameter is in minutes
+    DisplayTimeout(2);               // times out display so OLED does not fade. timeout parameter is in minutes
     encoderTimer();                  // check to see if encoder is in use
     pwrLED();                        // check to see if power LED should blink ( low power)
   }
