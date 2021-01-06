@@ -37,8 +37,6 @@ void displayText(String lines[3], String Line4, int numLines) {
   //g_DisplayStarted = millis();            //reset the timer for the
 }
 
-////////////////////////////////////////////////////////////////////////////
-
 void showStatus(int seconds) {
   // shows the staus display periodically
   static long lastTimeChecked = millis();     // last time we checked
@@ -49,7 +47,7 @@ void showStatus(int seconds) {
     lastTimeChecked = millis();
   }
 }
-///////////////////////////////////////////////////////////////////////////
+
 void DisplayTimeout(int timeout) {    // timeout is in minutes
   /*Times out the status display, turns it off after a period of inactivity.  This saves the OLEDS
   */
@@ -68,10 +66,6 @@ void DisplayTimeout(int timeout) {    // timeout is in minutes
     g_TimeDisplayStarted = millis();
   }
 }
-
-/////////////////////////////////////////////////////////////////////////////
-
-
 
 void statusDisplay() {
   /*
@@ -192,10 +186,17 @@ void pwrLED() {
     }
     else if (!ledOn) {
       if ( millis() - blinkTimer > blinkOff) {
-        // turn on
-        ledcWrite(0, 50);
-        ledOn = true;
-        blinkTimer = millis();
+        // turn on if display is timed out
+        if (!StatusDisplayOn) {
+          ledcWrite(0, 50);
+          ledOn = true;
+          blinkTimer = millis();
+        }
+        else if (StatusDisplayOn) {
+          // turn off is status display is on
+          ledOn = false;  // turn off
+          ledcWrite(0, 0);
+        }
       }
     }
   }
