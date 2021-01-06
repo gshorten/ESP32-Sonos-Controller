@@ -56,7 +56,7 @@ void DisplayTimeout(int timeout) {    // timeout is in minutes
   const long displayTimeout = timeout * 60000;         // time we let display stay on, in milliseconds
   //static long timeDisplayStarted = millis();
   long displayCheck = millis();
-  if (g_SonosInfo.playState != "Playing" && g_ControlsActive != false) {
+  if (g_SonosInfo.playState != "Playing" && g_ControlsActive == false) {
     // only time out if we are not playing and controls are not active
     if (displayCheck - g_TimeDisplayStarted >= displayTimeout) {
       Heltec.display->clear();        // clear buffer

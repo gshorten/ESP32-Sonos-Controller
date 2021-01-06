@@ -100,7 +100,6 @@ void rotaryHandler(int encDirection) {
       break;
   }
 }
-
 /////////////////////////////////////////////////////////////////////////////////////
 
 void setSonosVolume(int encDirection) {
