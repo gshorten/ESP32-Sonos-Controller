@@ -31,10 +31,12 @@
    4.2  display timeout stopped while unit is paused and encoder is turned
    4.3 fixed display timeout
    4.4 tweaked LED
+   4.5 fixed tweaked LED
+   
 */
 
 String FirmwareVer = {
-  "4.4"
+  "4.5"
   };        // firmware version, must match version_bin.txt file
 
 void firmwareUpdate(void) {
