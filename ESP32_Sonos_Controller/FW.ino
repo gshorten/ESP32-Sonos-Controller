@@ -32,11 +32,12 @@
    4.3 fixed display timeout
    4.4 tweaked LED
    4.5 fixed tweaked LED
+   4.6 added volume bar
    
 */
 
 String FirmwareVer = {
-  "4.5"
+  "4.6"
   };        // firmware version, must match version_bin.txt file
 
 void firmwareUpdate(void) {

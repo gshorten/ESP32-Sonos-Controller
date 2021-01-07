@@ -143,10 +143,13 @@ void setSonosVolume(int encDirection) {
   g_SonosInfo.volume = newVolume;
   g_sonos.setVolume(g_ActiveUnit, newVolume); // change the volume
   textToDisplay[0] = String("Changing " + g_ActiveUnitName + " Volume");
-  textToDisplay[1] = String("Volume:  ");
-  textToDisplay[1].concat(newVolume);
+  //textToDisplay[1] = String("Volume:  ");
+  //textToDisplay[1].concat(newVolume);
+  textToDisplay[1] = "";
   textToDisplay[2] = " ";
   displayText(textToDisplay);
+  Heltec.display ->drawProgressBar(10,20,45,15,newVolume);
+  Heltec.display->display(); 
 }
 //////////////////////////////////////////////////////////////////////////////
 

@@ -192,12 +192,11 @@ void pwrLED() {
           ledOn = true;
           blinkTimer = millis();
         }
-
       }
     }
   }
   else if (!g_LowBattery) {
-    if (StatusDisplayOn) {
+    if (!StatusDisplayOn) {
       // turn off is status display is on
       ledOn = false;  // turn off
       ledcWrite(0, 0);
