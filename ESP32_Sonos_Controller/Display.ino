@@ -170,6 +170,7 @@ void pDInt(String label, int value) {
 
 void pwrLED() {
   //blinks the power LED once per second, indicates that the unit is on.
+  //LED is on when display is timed out, execept when power is low.
   // we only do this when the display is off.
   long blinkOn = 2000;
   long blinkOff = 500;
@@ -195,13 +196,14 @@ void pwrLED() {
       }
     }
   }
-  else if (!g_LowBattery) {
-    if (!StatusDisplayOn) {
+  else if (g_LowBattery != false) {
+    if (StatusDisplayOn == true) {
       // turn off is status display is on
       ledOn = false;  // turn off
       ledcWrite(0, 0);
     }
-    else {
+    else if (StatusDisplayOn == false){
+      // turn on
       ledcWrite(0, 50);
     }
   }
