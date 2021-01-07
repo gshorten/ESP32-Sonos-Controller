@@ -148,7 +148,7 @@ void setSonosVolume(int encDirection) {
   textToDisplay[1] = "";
   textToDisplay[2] = " ";
   displayText(textToDisplay);
-  Heltec.display ->drawProgressBar(10,20,45,15,newVolume);
+  Heltec.display ->drawProgressBar(10,20,110,15,newVolume);
   Heltec.display->display(); 
 }
 //////////////////////////////////////////////////////////////////////////////
