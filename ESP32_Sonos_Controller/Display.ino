@@ -196,7 +196,7 @@ void pwrLED() {
       }
     }
   }
-  else if (g_LowBattery != false) {
+  else if (g_LowBattery == false) {
     if (StatusDisplayOn == true) {
       // turn off is status display is on
       ledOn = false;  // turn off

@@ -155,7 +155,6 @@ void setSonosVolume(int encDirection) {
 
 void pausePlay() {
   // pauses or plays the sonos unit
-
   g_TimeDisplayStarted = millis();
   if (StatusDisplayOn == true) {
     String textToDisplay[3];

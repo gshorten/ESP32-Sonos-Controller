@@ -35,11 +35,12 @@
    4.6 added volume bar
    4.7 tweaked volume bar
    4.8 tweaked power LED
+   4.9 tweaked power LED
    
 */
 
 String FirmwareVer = {
-  "4.8"
+  "4.9"
   };        // firmware version, must match version_bin.txt file
 
 void firmwareUpdate(void) {
