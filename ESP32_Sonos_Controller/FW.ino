@@ -37,7 +37,6 @@
    4.8 tweaked power LED
    4.9 tweaked power LED
    4.10 tweaked startup
-   
 */
 
 String FirmwareVer = {
