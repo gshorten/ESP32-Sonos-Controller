@@ -217,7 +217,7 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType,
 weatherInfo getWeather();
 void pausePlay();
 void checkEncoder();
-void displayText(String lines[3], String line4 = "" ,int numLines = 3);
+void displayText(String lines[3], String line4 = "" , int numLines = 3);
 void scanNetworks(int numToScan);
 boolean checkSSID(String wifiSSID);
 void getSonosUnits(boolean showSplash = false);
@@ -277,7 +277,7 @@ void setup() {
   buttonConfig->setFeature(ButtonConfig::kFeatureLongPress);
   //buttonConfig->setFeature(ButtonConfig::kFeatureRepeatPress);    // probably don't need this
   //encButton.setDebounceDelay(30);     // increased from default of 20 ms
- // encButton.setDoubleClickDelay(500);   // increased from default of 400 ms
+  // encButton.setDoubleClickDelay(500);   // increased from default of 400 ms
 
   // set up the encoder
   // Enable the weak pull up resistors
@@ -312,7 +312,7 @@ void setup() {
     if (FirmwareVersionCheck()) {
       firmwareUpdate();
     }
-    
+
     makeSonosIPList();
     printOutSonosList();
 
@@ -344,11 +344,11 @@ void setup() {
     StatusDisplayOn = true;
     statusDisplay();
   }
-  else {
+  else if (g_State == SETUP) {
     // state is setup
     Serial.println(" no wifi, bypassed boot - go to setup");
     String splash[3];
-    splash[0] = "No WiFi or Sonos connection";
+    splash[0] = "No WiFi connection";
     splash[1] = "Use web browser on";
     splash[2] = "phone or tablet to setup WiFi & Sonos Players";
     displayText(splash);
