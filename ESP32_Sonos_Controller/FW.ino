@@ -37,6 +37,7 @@
    4.8 tweaked power LED
    4.9 tweaked power LED
    4.11 tweaked startup
+   4.12 tweaked startup
 */
 
 
@@ -109,7 +110,6 @@ int FirmwareVersionCheck(void) {
     payload.trim();
     if (payload.equals(FirmwareVer)) {
       Serial.printf("\nDevice already on latest firmware version:%s\n", FirmwareVer);
-      g_FirmwareVersion = FirmwareVer;
       return 0;
     }
     else
@@ -122,10 +122,8 @@ int FirmwareVersionCheck(void) {
       splash[2] = "Updating to latest Firmware, version: ";
       splash[2] +=  payload;
       displayText(splash);
-      g_FirmwareVersion = payload;
       return 1;
     }
   }
-  //NVS.setString("Firmware", payload);     // Save the version number
   return 0;
 }
