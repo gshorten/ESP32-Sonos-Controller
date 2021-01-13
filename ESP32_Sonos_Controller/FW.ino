@@ -40,8 +40,6 @@
    4.12 tweaked startup
 */
 
-
-
 void firmwareUpdate(void) {
   WiFiClientSecure client;
   client.setCACert(rootCACertificate);

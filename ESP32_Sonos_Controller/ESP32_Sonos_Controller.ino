@@ -95,8 +95,7 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "4.12";        // firmware version, must match version_bin.txt file
-
+String FirmwareVer = "5.0";
 // struct to hold  track and playstate information on the active unit
 typedef struct {
   String playState;
@@ -189,7 +188,6 @@ const int SERIAL_DATA_THRESHOLD_MS = 500;
 #define ETHERNET_ERROR_DHCP "E: DHCP"
 #define ETHERNET_ERROR_CONNECT "E: Connect"
 
-
 IPAddress g_ActiveUnit;       // the current sonos unit we are controlling.
 String g_ActiveUnitName;      // active unit name
 
@@ -237,15 +235,35 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
-
-  NVS.begin();            // start non volatile storage
-  //NVS.eraseAll();       // only use for debugging
-
-  // set up OLED display:
+   // set the encoder button to use the built-in pull up register.
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  
+   // set up OLED display:
   Heltec.begin(true /*DisplayEnable Enable*/, true /*Serial Enable*/);
   Heltec.display->init();
   Heltec.display->flipScreenVertically();
   Heltec.display->setBrightness(255);
+
+  NVS.begin();            // start non volatile storage
+  // make configuration string (json file)
+  String params = configString();
+  conf.setDescription(params);
+   // read configuration file
+  conf.readConfig();
+
+  if (digitalRead(BUTTON_PIN) == LOW){
+    // reset NVS
+    Serial.print("Resetting Configuration");
+    while (digitalRead(BUTTON_PIN) == LOW){
+      String splash[3] = {"Resetting Configuration", "Release Button",""};
+      displayText(splash);
+      delay(200);
+    } 
+    NVS.eraseAll();       // erase last unit used
+    boolean confDeleted = conf.deleteConfig();  // delete configuration
+    Serial.print("Configuration Reset");
+    ESP.restart();
+  }
 
   String textToDisplay[3];
   textToDisplay[0] = "Portable Sonos Control";
@@ -263,8 +281,7 @@ void setup() {
   analogSetPinAttenuation(37, ADC_11db);
 
   // Configure the button handler
-  // set the encoder button to use the built-in pull up register.
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
+ 
   // Configure the ButtonConfig with the event handler, and enable all higher level events.
   ButtonConfig* buttonConfig = encButton.getButtonConfig();
   buttonConfig->setEventHandler(buttonEvent);               // the handler for button events
@@ -291,11 +308,8 @@ void setup() {
   ledcAttachPin(LED_PIN, 0);
 
   // get configuration
-  // make configuration string (json file)
-  String params = configString();
-  conf.setDescription(params);
-  // read configuration file
-  conf.readConfig();
+  
+ 
   // put configuration settings in config struct
   initWiFi();       // start wifi client and server
 
