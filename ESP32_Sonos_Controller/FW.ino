@@ -38,6 +38,8 @@
    4.9 tweaked power LED
    4.11 tweaked startup
    4.12 tweaked startup
+   5.0 added reset function
+   5.1 added ip check for sonos units, units that do not respond to a ping are not added
 */
 
 void firmwareUpdate(void) {

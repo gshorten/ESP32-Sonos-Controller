@@ -62,6 +62,7 @@
 #include <HTTPUpdate.h>
 #include <WiFiClientSecure.h>
 #include "cert.h"
+#include <ESP32Ping.h>
 
 // setup encoder and button
 using namespace ace_button;
@@ -95,7 +96,8 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "5.0";
+String FirmwareVer = "5.1";
+
 // struct to hold  track and playstate information on the active unit
 typedef struct {
   String playState;

@@ -33,24 +33,24 @@ void updateSonosStatus(long updateInterval) {
       // get full track info
       FullTrackInfo info;
       info = g_sonos.getFullTrackInfo(g_ActiveUnit);
-//      g_SonosInfo.album = info.album;
-//      g_SonosInfo.title = info.title;
-//      g_SonosInfo.creator = info.creator;
+      //      g_SonosInfo.album = info.album;
+      //      g_SonosInfo.title = info.title;
+      //      g_SonosInfo.creator = info.creator;
 
       if (g_SonosInfo.playState == "Playing") {
         Serial.print("Source: "); Serial.println(g_SonosInfo.source);
-//        if (   g_SonosInfo.source == SPOTIFY_SCHEME
-//               || g_SonosInfo.source == SPOTIFYSTATION_SCHEME
-//               || g_SonosInfo.source == HTTP_SCHEME
-//               || g_SonosInfo.source == FILE_SCHEME
-//               || g_SonosInfo.source == QUEUE_SCHEME ) {
-//          // only these sources seem to have full track information available
-         
-          g_SonosInfo.title = String(info.title);
-          g_SonosInfo.creator = String(info.creator);
-          g_SonosInfo.album = String(info.album);
-          g_TrackInfoAvailable = true;
-//        }
+        //        if (   g_SonosInfo.source == SPOTIFY_SCHEME
+        //               || g_SonosInfo.source == SPOTIFYSTATION_SCHEME
+        //               || g_SonosInfo.source == HTTP_SCHEME
+        //               || g_SonosInfo.source == FILE_SCHEME
+        //               || g_SonosInfo.source == QUEUE_SCHEME ) {
+        //          // only these sources seem to have full track information available
+
+        g_SonosInfo.title = String(info.title);
+        g_SonosInfo.creator = String(info.creator);
+        g_SonosInfo.album = String(info.album);
+        g_TrackInfoAvailable = true;
+        //        }
         //        else {
         //          g_SonosInfo.title = "";
         //          g_SonosInfo.creator = "";
@@ -68,6 +68,7 @@ void updateSonosStatus(long updateInterval) {
 
 void makeSonosIPList () {
   // construct sonos list from the conf json file
+  // TODO: verify each sonos ip address to make sure it's valid.  use Ping?
   int count = 0;
   for (int x = 3; x < (NUM_SONOS_UNITS * 2) + 3; x = x + 2) {
     // get name
@@ -78,10 +79,14 @@ void makeSonosIPList () {
     unitIP.fromString(unitIPStr);
 
     if (unitName != "none" && unitName != "" && unitIPStr  != "192.168.1.x") {
-      // add to list of sonos units
-      g_SonosUnits[count].UnitName = unitName;
-      g_SonosUnits[count].UnitIPAddress = unitIP;
-      count ++;
+      // test to see if it can be pinged
+      boolean pingResult = Ping.ping(unitIP);
+      if (pingResult) {
+        // add to list of sonos units
+        g_SonosUnits[count].UnitName = unitName;
+        g_SonosUnits[count].UnitIPAddress = unitIP;
+        count ++;
+      }
     }
   }
   g_numOfActiveUnits = count;
