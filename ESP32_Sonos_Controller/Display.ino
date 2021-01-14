@@ -118,9 +118,8 @@ void statusDisplay() {
 int batteryPercent() {
   // reads the battery voltage, returns an int 0 - 100 percent
   // battery voltage constants
-  const long FULL_BATTERY = 4100;       // fully charged, divide by 1000 for mv
+  long FULL_BATTERY = 4050;       // fully charged, divide by 1000 for mv
   const long EMPTY_BATTERY = 3200;      // fully discharged
-  long BATT_RANGE = FULL_BATTERY - EMPTY_BATTERY;
   const float BATT_ADJ_MV = 0.00225;  // to convert battery reading to mv
   const float BATT_ADJ = 2.25;        // to convert battery reading to a 3000 - 4200 range
   const int LOW_BATT = 20;
@@ -128,7 +127,8 @@ int batteryPercent() {
   static int avgPercent = 50;
   static int readingNo = 1;
   static int totalPercent = 0;
-
+  static int maxBattery = 4000;
+  
   Serial.println("Checking the Battery Voltage");
   // TODO: take several readings
   adcStart(BATT_PIN);
@@ -136,6 +136,14 @@ int batteryPercent() {
   Serial.printf("Battery power in GPIO 37: ");
   Serial.println(analogRead(BATT_PIN));
   float voltReading  =  analogRead(BATT_PIN) * BATT_ADJ ;
+  if (maxBattery > voltReading){
+    maxBattery = voltReading ;
+    Serial.print("Max Battery is: ");Serial.print(maxBattery);
+  }
+  if(maxBattery > FULL_BATTERY){
+    FULL_BATTERY =  maxBattery;
+  }
+  long BATT_RANGE = FULL_BATTERY - EMPTY_BATTERY;
   Serial.print("voltReading: "); Serial.println(voltReading);
   float battCalc = (voltReading - EMPTY_BATTERY) / BATT_RANGE;
   Serial.print("battCalc: "); Serial.println(battCalc);

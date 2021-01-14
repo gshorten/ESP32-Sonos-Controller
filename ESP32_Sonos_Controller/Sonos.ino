@@ -39,6 +39,8 @@ void updateSonosStatus(long updateInterval) {
 
       if (g_SonosInfo.playState == "Playing") {
         Serial.print("Source: "); Serial.println(g_SonosInfo.source);
+
+        // temporarily disabling this, I'm showing whatever we've got
         //        if (   g_SonosInfo.source == SPOTIFY_SCHEME
         //               || g_SonosInfo.source == SPOTIFYSTATION_SCHEME
         //               || g_SonosInfo.source == HTTP_SCHEME

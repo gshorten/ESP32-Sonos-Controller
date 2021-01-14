@@ -5,7 +5,6 @@
    TODO:
     Fixes / bugs / features:
       - Add an "about" screen that shows information - ip of the control, firmware version.
-      - Use ReactESP library to improve responsiveness of the pushbutton and volume control.  Pretty major change though. Fork it.
       - On startup, if cannot connnect to active sonos unit, go to menu to pick a new one, instead of going into setup mode?
       - change OLED display function to display either 3 or 4 lines, centered or not, diff. sizes
       - add method to  SonosUPnP to play sonos favorite  (difficult)
@@ -13,6 +12,7 @@
                       for radio stations and Siriusxm can be extracted (difficult)
 
   TODO Completed:
+      - on startup check the list of sonos units, ping each one , don't add if not valid
      - don't change volume of a  unit  until volume control has not been turned for 250ms ?
                       display value that it will change to for feedback.
       - Error handling to switch modes (running or setup) if sonos unit cant be found or wifi cant connect
@@ -80,7 +80,7 @@ WebServer server;
 WebConfig conf;
 WiFiClient webClient;
 
-// Firmware update variables
+// Firmware update http locations
 #define URL_fw_Version "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/ESP32_Sonos_Controller/bin_version.txt"
 #define URL_fw_Bin "https://raw.githubusercontent.com/gshorten/GSCUpdates/master/ESP32_Sonos_Controller/ESP32_Sonos_Controller.ino.wifi_kit_32.bin"
 
@@ -96,7 +96,7 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "5.2";
+String FirmwareVer = "5.3";           // current software version, update this to force software update
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
@@ -294,8 +294,7 @@ void setup() {
   buttonConfig->setFeature(ButtonConfig::kFeatureSuppressAfterClick);
   buttonConfig->setFeature(ButtonConfig::kFeatureSuppressAfterDoubleClick);
   buttonConfig->setFeature(ButtonConfig::kFeatureLongPress);
-  //buttonConfig->setFeature(ButtonConfig::kFeatureRepeatPress);    // probably don't need this
-  //encButton.setDebounceDelay(30);     // increased from default of 20 ms
+  // encButton.setDebounceDelay(15);     // changed from default of 20 ms
   // encButton.setDoubleClickDelay(500);   // increased from default of 400 ms
 
   // set up the encoder
@@ -306,13 +305,10 @@ void setup() {
   // set starting count value after attaching
   sonosEnc.setCount(1000);        // could probably be anything, but can't go negative (its a uint16)
 
+  // setup LED
   ledcSetup(0, 5000, 8);
   ledcAttachPin(LED_PIN, 0);
 
-  // get configuration
-  
- 
-  // put configuration settings in config struct
   initWiFi();       // start wifi client and server
 
   if (g_State == OPERATING) {

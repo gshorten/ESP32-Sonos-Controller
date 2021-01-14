@@ -89,7 +89,6 @@ void checkEncoder() {
 void rotaryHandler(int encDirection) {
   // calls the appropriate function when the encoder is turned depending on mode
   // note these are called each time the rotary control moves one step up or down
-
   switch (g_EncInputMode) {
     case STATE_PLAYING:
       setSonosVolume(encDirection);
@@ -108,10 +107,6 @@ void setSonosVolume(int encDirection) {
     volume while we are also changing it.  We also accumulate  a number of encoder readings then change the volume, also to reduce the netork traffic to the
     sonos units.
     The display update function is suspended with a flag while the user is changing the volume.
-    TODO; periodically check the volume and cache it, this should result in faster response.  if the volume of a sonos unit has not
-    been changed in a while it seems to take 2-3 seconds for it to start responding, this is probably by design,
-    the sonos will respond quickly to getVol requests when you are actively changing the volume.  I've noticed the same
-    behaviour from web based and app based sonos controllers.
   */
 
   int activeVolume;            // volume of the active unit
@@ -142,9 +137,7 @@ void setSonosVolume(int encDirection) {
   Serial.println(newVolume);
   g_SonosInfo.volume = newVolume;
   g_sonos.setVolume(g_ActiveUnit, newVolume); // change the volume
-  textToDisplay[0] = String("Changing " + g_ActiveUnitName + " Volume");
-  //textToDisplay[1] = String("Volume:  ");
-  //textToDisplay[1].concat(newVolume);
+  textToDisplay[0] = String(g_ActiveUnitName + " Volume");
   textToDisplay[1] = "";
   textToDisplay[2] = " ";
   displayText(textToDisplay);
