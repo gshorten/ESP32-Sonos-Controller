@@ -40,6 +40,7 @@
    4.12 tweaked startup
    5.0 added reset function
    5.1 added ip check for sonos units, units that do not respond to a ping are not added
+   5.2 shortened ip check to 2 pings, tweaked pause play for faster response
 */
 
 void firmwareUpdate(void) {

@@ -80,7 +80,8 @@ void makeSonosIPList () {
 
     if (unitName != "none" && unitName != "" && unitIPStr  != "192.168.1.x") {
       // test to see if it can be pinged
-      boolean pingResult = Ping.ping(unitIP);
+      boolean pingResult = Ping.ping(unitIP,2);  // ping each address 2 times, speeds up boot
+      Serial.print("Pinging: ");Serial.print(unitIP);Serial.print(" Result: ");Serial.println(pingResult);
       if (pingResult) {
         // add to list of sonos units
         g_SonosUnits[count].UnitName = unitName;

@@ -96,7 +96,7 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "5.1";
+String FirmwareVer = "5.2";
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
@@ -271,7 +271,7 @@ void setup() {
   textToDisplay[0] = "Portable Sonos Control";
   textToDisplay[1] = "FW Version: ";
   textToDisplay[1] += FirmwareVer;
-  textToDisplay[2] = "Connecting to WiFi, Checking Firmware";
+  textToDisplay[2] = "Connecting to WiFi, Checking for Updates";
   displayText(textToDisplay);
 
   // battery voltage detection settngs

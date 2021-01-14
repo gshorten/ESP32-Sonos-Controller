@@ -1,5 +1,5 @@
-/*  
-control functions using rotary encoder and pushbutton
+/*
+  control functions using rotary encoder and pushbutton
 */
 
 void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonState) {
@@ -17,8 +17,8 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
   g_ControlsActive = true;
   switch (eventType) {
     // single click
-    case AceButton::kEventClicked:{
-    //case AceButton::kEventReleased: {
+    case AceButton::kEventClicked: {
+        //case AceButton::kEventReleased: {
         /*
            determines what happens with a single click.  The global g_SingleClickAction is set when a menu item
            item is shown on the main menu, or on a sub menu (such as select unit), ie as the main menu is scrolled the
@@ -41,7 +41,7 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
         }
       }
       break;
-      case AceButton::kEventDoubleClicked: {
+    case AceButton::kEventDoubleClicked: {
         // double click always skips to the next track
         g_sonos.skip(g_ActiveUnit, SONOS_DIRECTION_FORWARD);
         String splash[3] = {"Skipping", "Forward To The", "Next Track"};
@@ -53,7 +53,7 @@ void buttonEvent(AceButton* /*encButton*/, uint8_t eventType, uint8_t buttonStat
            long press always just brings up the main menu
            change input modes for volume control and encoder button to operate the main menu
         */
-        
+
         changeSonosUnit();
       }
       break;
@@ -68,7 +68,7 @@ void checkEncoder() {
   long newPosition = sonosEnc.getCount();
   static long oldPosition = newPosition;     // will be initiallized once, so first time this is called it won't change volume.
   int encDirection;
-   
+
   // check to see if position has changed:
   if (abs(newPosition - oldPosition) > encHyst ) {
     g_ControlsActive = true;
@@ -126,7 +126,7 @@ void setSonosVolume(int encDirection) {
   const byte VOL_CHANGE_UP = 4;
   const byte VOL_CHANGE_DOWN = 4;      // reduces volume more quickly
 
-   if (encDirection == CW) {
+  if (encDirection == CW) {
     newVolume = oldVolume + VOL_CHANGE_UP;
     if (newVolume >= 100) {             // check high, low limits, if reading is >100 or less than 0 correct
       newVolume = 100;
@@ -148,16 +148,17 @@ void setSonosVolume(int encDirection) {
   textToDisplay[1] = "";
   textToDisplay[2] = " ";
   displayText(textToDisplay);
-  Heltec.display ->drawProgressBar(10,20,110,15,newVolume);
-  Heltec.display->display(); 
+  Heltec.display ->drawProgressBar(10, 20, 110, 15, newVolume);
+  Heltec.display->display();
 }
 //////////////////////////////////////////////////////////////////////////////
 
 void pausePlay() {
   // pauses or plays the sonos unit
   g_TimeDisplayStarted = millis();
+  String textToDisplay[3];
   if (StatusDisplayOn == true) {
-    String textToDisplay[3];
+
     if (g_SonosInfo.playState == "Playing") {
       Serial.println("Pausing active unit ");
       g_sonos.pause(g_ActiveUnit);
@@ -170,17 +171,18 @@ void pausePlay() {
       textToDisplay[1] = "Change to Playing";
       g_SonosInfo.playState = "Playing";
     }
-    textToDisplay[0] = String(g_ActiveUnitName);
-    textToDisplay[2] = "";
-    displayText(textToDisplay);
-    delay(2000);
+
     //statusDisplay();
   }
   else if (StatusDisplayOn == false) {
     //if display is timed out we just turn it back on,
     StatusDisplayOn = true;
-    statusDisplay();        // immediatly show status.
+    //statusDisplay();        // immediatly show status.
   }
+  textToDisplay[0] = String(g_ActiveUnitName);
+  textToDisplay[2] = "";
+  displayText(textToDisplay);
+  //delay(2000);
   g_ControlsActive = false;
 }
 
