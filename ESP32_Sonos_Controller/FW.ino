@@ -42,6 +42,7 @@
    5.1 added ip check for sonos units, units that do not respond to a ping are not added
    5.2 shortened ip check to 2 pings, tweaked pause play for faster response
    5.3 numerous small bugfixes, optimizations. added battery calibration feature
+   5.4 fixed battery reading
 */
 
 void firmwareUpdate(void) {

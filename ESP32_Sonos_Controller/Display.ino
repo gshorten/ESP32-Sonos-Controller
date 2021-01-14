@@ -136,7 +136,7 @@ int batteryPercent() {
   Serial.printf("Battery power in GPIO 37: ");
   Serial.println(analogRead(BATT_PIN));
   float voltReading  =  analogRead(BATT_PIN) * BATT_ADJ ;
-  if (maxBattery > voltReading){
+  if (maxBattery < voltReading){
     maxBattery = voltReading ;
     Serial.print("Max Battery is: ");Serial.print(maxBattery);
   }
