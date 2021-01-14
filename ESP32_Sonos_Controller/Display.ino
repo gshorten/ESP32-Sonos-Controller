@@ -127,7 +127,7 @@ int batteryPercent() {
   static int avgPercent = 50;
   static int readingNo = 1;
   static int totalPercent = 0;
-  static int maxBattery = 4000;
+  static long maxBattery = 100;
   
   Serial.println("Checking the Battery Voltage");
   // TODO: take several readings
@@ -138,7 +138,7 @@ int batteryPercent() {
   float voltReading  =  analogRead(BATT_PIN) * BATT_ADJ ;
   if (maxBattery < voltReading){
     maxBattery = voltReading ;
-    Serial.print("Max Battery is: ");Serial.print(maxBattery);
+    Serial.print("Max Battery is: ");Serial.println(maxBattery);
   }
   if(maxBattery > FULL_BATTERY){
     FULL_BATTERY =  maxBattery;
