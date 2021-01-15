@@ -82,6 +82,7 @@ void statusDisplay() {
     // gets current volume, playstate, track info for updating the display
 
     String displayLines[3];
+    displayLines[2].reserve(256);
     // get battery percent and current time
     int battPercent = batteryPercent();
     String hourMinutes = CurrentDT(CURR_TIME);
@@ -118,55 +119,57 @@ void statusDisplay() {
 int batteryPercent() {
   // reads the battery voltage, returns an int 0 - 100 percent
   // battery voltage constants
-  long FULL_BATTERY = 4050;       // fully charged, divide by 1000 for mv
+  static long fullBattery = 3900;       // fully charged, divide by 1000 for mv
   const long EMPTY_BATTERY = 3200;      // fully discharged
-  const float BATT_ADJ_MV = 0.00225;  // to convert battery reading to mv
+  static long totalBattery = 0;
+  static long avgBattery;
   const float BATT_ADJ = 2.25;        // to convert battery reading to a 3000 - 4200 range
   const int LOW_BATT = 20;
-  int avg = 6;                // number of readings to average
-  static int avgPercent = 50;
+  const int avg = 5;                // number of readings to average
   static int readingNo = 1;
-  static int totalPercent = 0;
-  static long maxBattery = 100;
-  
+  static int battPercent = 50;
+
   Serial.println("Checking the Battery Voltage");
-  // TODO: take several readings
   adcStart(BATT_PIN);
   //while (adcBusy(BATT_PIN));
-  Serial.printf("Battery power in GPIO 37: ");
-  Serial.println(analogRead(BATT_PIN));
-  float voltReading  =  analogRead(BATT_PIN) * BATT_ADJ ;
-  if (maxBattery < voltReading){
-    maxBattery = voltReading ;
-    Serial.print("Max Battery is: ");Serial.println(maxBattery);
-  }
-  if(maxBattery > FULL_BATTERY){
-    FULL_BATTERY =  maxBattery;
-  }
-  long BATT_RANGE = FULL_BATTERY - EMPTY_BATTERY;
-  Serial.print("voltReading: "); Serial.println(voltReading);
-  float battCalc = (voltReading - EMPTY_BATTERY) / BATT_RANGE;
-  Serial.print("battCalc: "); Serial.println(battCalc);
-  int battPercent = battCalc * 100;
-  Serial.print("Battery Percent: "); Serial.println(battPercent);
+  long voltReading  =  analogRead(BATT_PIN) * BATT_ADJ ;
+  Serial.printf("Battery power in GPIO 37: "); Serial.println(voltReading);
   adcEnd(BATT_PIN);
   if (readingNo <= avg) {
-    // average readings
-    totalPercent = totalPercent + battPercent;
+    totalBattery = totalBattery + voltReading;
+    Serial.print("Total Battery: ");Serial.println(totalBattery);
     readingNo ++;
+    Serial.print("Reading Number: ");Serial.println(readingNo);
   }
   else if ( readingNo > avg) {
-    avgPercent = totalPercent / avg;
-    totalPercent = 0;
+    // calculate average battery level
+    Serial.println("Calculating Battery Percent");
+    avgBattery = totalBattery / avg;
+    // check max battery level and reset if necessary
+    if (fullBattery < avgBattery) {
+      fullBattery = avgBattery ;
+    }
+    float battLevel = avgBattery - EMPTY_BATTERY;
+    float battRange = fullBattery - EMPTY_BATTERY;
+//    Serial.print("Battery Level is: ");Serial.println(battLevel);
+//    Serial.print("Battery Range is: "); Serial.println(battRange);
+    float battCalc = (battLevel / battRange);
+//    Serial.print("Battery Calc is: "); Serial.println(battCalc);
+    battPercent = battCalc * 100;
+    totalBattery = 0;
     readingNo = 1 ;
   }
-  if (avgPercent < LOW_BATT ) {
+  if (battPercent < LOW_BATT ) {
     g_LowBattery = true;
   }
-  else if (avgPercent >= LOW_BATT) {
+  else if (battPercent >= LOW_BATT) {
     g_LowBattery = false;
   }
-  return avgPercent;
+//  Serial.print("Full Battery is: "); Serial.println(fullBattery);
+//  Serial.print("Average Battery is: ");Serial.println(avgBattery);
+//  Serial.print("Battery Percent: "); Serial.println(battPercent);
+  
+  return battPercent;
 }
 
 void pDInt(String label, int value) {
@@ -210,7 +213,7 @@ void pwrLED() {
       ledOn = false;  // turn off
       ledcWrite(0, 0);
     }
-    else if (StatusDisplayOn == false){
+    else if (StatusDisplayOn == false) {
       // turn on
       ledcWrite(0, 50);
     }

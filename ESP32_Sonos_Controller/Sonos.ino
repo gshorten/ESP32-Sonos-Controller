@@ -70,7 +70,12 @@ void updateSonosStatus(long updateInterval) {
 
 void makeSonosIPList () {
   // construct sonos list from the conf json file
-  // TODO: verify each sonos ip address to make sure it's valid.  use Ping?
+  String splash[3];
+  splash[2].reserve(128);
+  splash[0] = "Checking for";
+  splash[1] = "Sonos Units";
+  splash[2] = "Please wait, I'll be a few seconds";
+  displayText(splash);
   int count = 0;
   for (int x = 3; x < (NUM_SONOS_UNITS * 2) + 3; x = x + 2) {
     // get name
@@ -82,19 +87,32 @@ void makeSonosIPList () {
 
     if (unitName != "none" && unitName != "" && unitIPStr  != "192.168.1.x") {
       // test to see if it can be pinged
-      boolean pingResult = Ping.ping(unitIP,2);  // ping each address 2 times, speeds up boot
-      Serial.print("Pinging: ");Serial.print(unitIP);Serial.print(" Result: ");Serial.println(pingResult);
+      boolean pingResult = Ping.ping(unitIP, 2); // ping each address 2 times, speeds up boot
+      Serial.print("Pinging: "); Serial.print(unitIP); Serial.print(" Result: "); Serial.println(pingResult);
+      String result;
       if (pingResult) {
+        result = " Found ";
         // add to list of sonos units
         g_SonosUnits[count].UnitName = unitName;
         g_SonosUnits[count].UnitIPAddress = unitIP;
         count ++;
       }
+      else if (!pingResult) {
+        result = " NOT FOUND: ";
+      }
+      splash[2] = ( result + unitName + " at: " + unitIPStr);
+      displayText(splash);
     }
   }
   g_numOfActiveUnits = count;
   g_SonosMenuLength = count + 2;
   makeSonosMenuList();
+  splash[0] = "Found ";
+  splash[0] += count;
+  splash[1] = "Sonos Players";
+  splash[2] = "Now getting Weather and Sonos Status";
+  displayText(splash);
+  delay(1000);
 }
 
 void makeSonosMenuList() {

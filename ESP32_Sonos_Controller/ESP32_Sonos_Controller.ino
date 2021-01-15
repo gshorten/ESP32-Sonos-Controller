@@ -96,7 +96,7 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "5.5";           // current software version, update this to force software update
+String FirmwareVer = "5.6";           // current software version, update this to force software update
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
@@ -282,8 +282,6 @@ void setup() {
   analogSetAttenuation(ADC_11db);       // Sets the input attenuation for ALL ADC inputs, default is ADC_11db, range is ADC_0db, ADC_2_5db, ADC_6db, ADC_11db
   analogSetPinAttenuation(37, ADC_11db);
 
-  // Configure the button handler
- 
   // Configure the ButtonConfig with the event handler, and enable all higher level events.
   ButtonConfig* buttonConfig = encButton.getButtonConfig();
   buttonConfig->setEventHandler(buttonEvent);               // the handler for button events

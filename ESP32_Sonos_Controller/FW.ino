@@ -44,6 +44,7 @@
    5.3 numerous small bugfixes, optimizations. added battery calibration feature
    5.4 fixed battery reading
    5.5 fixed battery reading, again
+   5.6 tweaked startup display to make more informative, fixed batt display, auto calibrate max 
 */
 
 void firmwareUpdate(void) {
