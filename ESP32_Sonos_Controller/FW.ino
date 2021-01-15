@@ -45,6 +45,7 @@
    5.4 fixed battery reading
    5.5 fixed battery reading, again
    5.6 tweaked startup display to make more informative, fixed batt display, auto calibrate max 
+   5.7 increased wifi search attempts and time between attempts
 */
 
 void firmwareUpdate(void) {
