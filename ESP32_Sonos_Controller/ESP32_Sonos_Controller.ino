@@ -96,7 +96,7 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "5.7";           // current software version, update this to force software update
+String FirmwareVer = "5.8";           // current software version, update this to force software update
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
@@ -338,11 +338,13 @@ void setup() {
     timeClient.setUpdateInterval(6000);         // update every 60 seconds
     timeClient.setPoolServerName("pool.ntp.org");
 
-    // check that active unit in NVS is valid (not all 0.0.0.0)
-    if (CurrentConfig.currentSonosUnit == NULL_IP) {
+    // check that active unit in NVS can be accessed
+    if (!Ping.ping(CurrentConfig.currentSonosUnit,2)) {
+      // if we cannot ping the last used unit, then
       // make the first unit in g_SonosUnits list the active unit
       g_ActiveUnit = g_SonosUnits[0].UnitIPAddress;
       g_ActiveUnitName = g_SonosUnits[0].UnitName;
+      saveLastUnit(); // save this one as the last unit used
     }
     else {
       g_ActiveUnit = CurrentConfig.currentSonosUnit;
