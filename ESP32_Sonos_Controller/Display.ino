@@ -34,7 +34,6 @@ void displayText(String lines[3], String Line4, int numLines) {
     }
   }
   Heltec.display->display();           // display the lines
-  //g_DisplayStarted = millis();            //reset the timer for the
 }
 
 void showStatus(int seconds) {
@@ -106,7 +105,7 @@ void statusDisplay() {
     Serial.println(displayLines[0]);
     Serial.println(displayLines[1]);
     Serial.println(displayLines[2]);
-    Serial.print("Track URI: "); Serial.println(g_SonosInfo.uri);
+    Serial.print("Track URI: "); Serial.println(g_SonosInfo.URI);
     Serial.print("Track Source: "); Serial.println(g_SonosInfo.source);
     Serial.println(" -------------------------------------------------------");
     Serial.println();

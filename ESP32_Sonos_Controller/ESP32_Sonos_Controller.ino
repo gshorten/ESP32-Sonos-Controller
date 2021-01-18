@@ -96,7 +96,7 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "5.9";           // current software version, update this to force software update
+String FirmwareVer = "5.10";           // current software version, update this to force software update
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
@@ -106,9 +106,10 @@ typedef struct {
   String title;
   String creator;
   String album;
-  String uri;
+  String URI;
 } SonosState;
 SonosState g_SonosInfo;
+
 
 // state constants for the encoder and button functions
 const int STATE_PLAYING = 0;
@@ -254,7 +255,7 @@ void setup() {
 
   if (digitalRead(BUTTON_PIN) == LOW){
     // reset NVS
-    Serial.print("Resetting Configuration");
+    Serial.print(F("Resetting Configuration"));
     while (digitalRead(BUTTON_PIN) == LOW){
       String splash[3] = {"Resetting Configuration", "Release Button",""};
       displayText(splash);
@@ -267,10 +268,10 @@ void setup() {
   }
 
   String textToDisplay[3];
-  textToDisplay[0] = "Portable Sonos Control";
-  textToDisplay[1] = "FW Version: ";
+  textToDisplay[0] = F("Portable Sonos Control");
+  textToDisplay[1] = F("FW Version: ");
   textToDisplay[1] += FirmwareVer;
-  textToDisplay[2] = "Connecting to WiFi, Checking for Updates";
+  textToDisplay[2] = F("Connecting to WiFi, Checking for Updates");
   displayText(textToDisplay);
 
   // battery voltage detection settngs
@@ -357,11 +358,11 @@ void setup() {
   }
   else if (g_State == SETUP) {
     // state is setup
-    Serial.println(" no wifi, bypassed boot - go to setup");
+    Serial.println(F(" no wifi, bypassed boot - go to setup"));
     String splash[3];
-    splash[0] = "No WiFi connection";
-    splash[1] = "Use web browser on";
-    splash[2] = "phone or tablet to setup WiFi & Sonos Players";
+    splash[0] = F("No WiFi connection");
+    splash[1] = F("Use web browser on");
+    splash[2] = F("phone or tablet to setup WiFi & Sonos Players");
     displayText(splash);
     server.on("/", handleRoot);
     server.begin(80);

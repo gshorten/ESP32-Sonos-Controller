@@ -48,6 +48,7 @@
    5.7 increased wifi search attempts and time between attempts
    5.8 fixed bug where hangs if last used unit cannot be found
    5.9 tweaked low battery setting
+   5.10 various code optimizations
 */
 
 void firmwareUpdate(void) {

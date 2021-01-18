@@ -153,15 +153,15 @@ void pausePlay() {
   if (StatusDisplayOn == true) {
 
     if (g_SonosInfo.playState == "Playing") {
-      Serial.println("Pausing active unit ");
+      Serial.println(F("Pausing active unit "));
       g_sonos.pause(g_ActiveUnit);
-      textToDisplay[1] = "Change to Paused";
+      textToDisplay[1] = F("Change to Paused");
       g_SonosInfo.playState = "Paused";
     }
     else if (g_SonosInfo.playState == "Paused" || g_SonosInfo.playState == "Stopped") {
-      Serial.println("Playing active unit ");
+      Serial.println(F("Playing active unit "));
       g_sonos.play(g_ActiveUnit);
-      textToDisplay[1] = "Change to Playing";
+      textToDisplay[1] = F("Change to Playing");
       g_SonosInfo.playState = "Playing";
     }
 
