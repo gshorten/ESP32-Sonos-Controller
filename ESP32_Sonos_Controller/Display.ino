@@ -110,9 +110,7 @@ void statusDisplay() {
     Serial.print("Track Source: "); Serial.println(g_SonosInfo.source);
     Serial.println(" -------------------------------------------------------");
     Serial.println();
-
     displayText(displayLines);
-    //g_TimeDisplayStarted = millis();
   }
 }
 
@@ -120,7 +118,7 @@ int batteryPercent() {
   // reads the battery voltage, returns an int 0 - 100 percent
   // battery voltage constants
   static long fullBattery = 3900;       // fully charged, divide by 1000 for mv
-  const long EMPTY_BATTERY = 3200;      // fully discharged
+  const long EMPTY_BATTERY = 3100;      // fully discharged
   static long totalBattery = 0;
   static long avgBattery;
   const float BATT_ADJ = 2.25;        // to convert battery reading to a 3000 - 4200 range

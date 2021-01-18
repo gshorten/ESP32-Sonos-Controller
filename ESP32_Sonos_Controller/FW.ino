@@ -47,6 +47,7 @@
    5.6 tweaked startup display to make more informative, fixed batt display, auto calibrate max 
    5.7 increased wifi search attempts and time between attempts
    5.8 fixed bug where hangs if last used unit cannot be found
+   5.9 tweaked low battery setting
 */
 
 void firmwareUpdate(void) {

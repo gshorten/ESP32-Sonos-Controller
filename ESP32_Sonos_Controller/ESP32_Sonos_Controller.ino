@@ -96,7 +96,7 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "5.8";           // current software version, update this to force software update
+String FirmwareVer = "5.9";           // current software version, update this to force software update
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
@@ -123,14 +123,15 @@ const byte CURR_TIME = 2;
 const byte SHORT_DATE = 3;
 
 // struct to store sonos unit data
-typedef struct sonosInf
+typedef struct 
 {
   IPAddress UnitIPAddress;
   String  UnitName;
-} SonosUnit;
+} sonosInf;
+sonosInf SonosUnit;
 
 const int NUM_SONOS_UNITS = 15;           // number of sonos units
-SonosUnit g_SonosUnits[NUM_SONOS_UNITS];  // array of sonos unit ipaddresses and names
+sonosInf g_SonosUnits[NUM_SONOS_UNITS];  // array of sonos unit ipaddresses and names
 int g_CurrentUnitNum = 0;                 //when selecting the unit with volume control, tracks the g_SonosUnits selected
 int g_numOfActiveUnits;                   //number of active sonos units
 IPAddress NULL_IP = (0, 0, 0, 0);
@@ -148,7 +149,6 @@ typedef struct {
   IPAddress currentSonosUnit;            // default sonos ip
   String currentSonosUnitName;
 } configData;
-
 configData CurrentConfig;                // current configuration
 
 // struct to store weather data
@@ -162,7 +162,6 @@ typedef struct {
   String currLongDesc;
   String fcstLongDesc;
 } weatherInfo ;
-
 weatherInfo g_Weather;  //global to hold weather information
 
 // 2 dimensional array to hold location name, weather ID, and UTC offset
