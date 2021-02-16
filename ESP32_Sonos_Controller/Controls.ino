@@ -68,9 +68,10 @@ void checkEncoder() {
   long newPosition = sonosEnc.getCount();
   static long oldPosition = newPosition;     // will be initiallized once, so first time this is called it won't change volume.
   int encDirection;
-
+  
   // check to see if position has changed:
   if (abs(newPosition - oldPosition) > encHyst ) {
+    Serial.println("Rotary Controller has changed");
     g_ControlsActive = true;
     if (newPosition > oldPosition) {
       encDirection = CW;
@@ -89,6 +90,7 @@ void checkEncoder() {
 void rotaryHandler(int encDirection) {
   // calls the appropriate function when the encoder is turned depending on mode
   // note these are called each time the rotary control moves one step up or down
+  Serial.println("Rotary Encoder was turned");
   switch (g_EncInputMode) {
     case STATE_PLAYING:
       setSonosVolume(encDirection);
