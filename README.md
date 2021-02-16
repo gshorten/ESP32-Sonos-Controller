@@ -7,3 +7,6 @@ I'll be adding additional documentation, but for now the primary purpose of this
 
 When a controller is started it checks this repository for the latest version.  If a later version exists
 it does an Over the Air (OTA) update.
+
+Instructions for use:
+https://sites.google.com/shortens.ca/sonoscontroller/home 
