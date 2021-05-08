@@ -96,7 +96,7 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "5.11";           // current software version, update this to force software update
+String FirmwareVer = "5.2";           // current software version, update this to force software update
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
@@ -167,7 +167,7 @@ weatherInfo g_Weather;  //global to hold weather information
 
 // 2 dimensional array to hold location name, weather ID, and UTC offset
 String g_Locations[10][3] = {
-  // UTC offset is stored as a string, converted to long*-1 before use .
+  // UTC offset is stored as a string, converted to long before use .
   {"Calgary", "5913490", "25200"},
   {"Almonte", "8125781", "18000"},
   {"Radium", "6115713", "25200"},
@@ -383,6 +383,7 @@ void loop() {
       timeClient.update();             // checks for current time (used in status display)
       showStatus(3);                   // show the status display
     }
+   //wifiKeepAlive();                 // check to see if we are connected to wifi, if not reconnect
     checkEncoder();                  // check to see if encoder has turned
     encButton.check();               // checks for button presses
     DisplayTimeout(2);               // times out display so OLED does not fade. timeout parameter is in minutes

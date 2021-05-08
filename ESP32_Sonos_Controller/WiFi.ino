@@ -26,3 +26,11 @@ boolean initWiFi() {
   }
   return wifiConnected;
 }
+
+void wifiKeepAlive(){
+  //checks to see if wifi is connected, if not it reconnects
+  if (WiFi.status() != WL_CONNECTED){
+    // Reconnect
+    initWiFi();
+  }
+}
