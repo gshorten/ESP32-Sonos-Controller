@@ -31,6 +31,12 @@ void wifiKeepAlive(){
   //checks to see if wifi is connected, if not it reconnects
   if (WiFi.status() != WL_CONNECTED){
     // Reconnect
-    initWiFi();
+    int wifiAttempts = 0;
+    int maxAttempts = 5;
+    while (WiFi.status() != WL_CONNECTED && wifiAttempts < maxAttempts) {   //loop until wifi is connected OR max attempts
+      wifiAttempts ++;
+      delay(500);
+      Serial.print(".");
+    }
   }
 }

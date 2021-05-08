@@ -96,7 +96,9 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "5.2";           // current software version, update this to force software update
+String FirmwareVer = "5.21";           // current software version, update this to force software update
+// don't foreget to also update the file bin_version.txt to same version here, and upload to github repository so 
+// that the controller will update. Also don't forget to compile to a binary for upload to github.
 
 // struct to hold  track and playstate information on the active unit
 typedef struct {
