@@ -29,14 +29,20 @@ boolean initWiFi() {
 
 void wifiKeepAlive(){
   //checks to see if wifi is connected, if not it reconnects
-  if (WiFi.status() != WL_CONNECTED){
-    // Reconnect
-    int wifiAttempts = 0;
-    int maxAttempts = 5;
-    while (WiFi.status() != WL_CONNECTED && wifiAttempts < maxAttempts) {   //loop until wifi is connected OR max attempts
-      wifiAttempts ++;
-      delay(500);
-      Serial.print(".");
+  const long checkFreq = 5000;
+  static long lastCheck = millis();
+  if (millis() - lastCheck > checkFreq){
+    if (WiFi.status() != WL_CONNECTED){
+      // Reconnect
+      int wifiAttempts = 0;
+      int maxAttempts = 5;
+      while (WiFi.status() != WL_CONNECTED && wifiAttempts < maxAttempts) {   //loop until wifi is connected OR max attempts
+        wifiAttempts ++;
+        delay(500);
+        WiFi.begin(conf.values[0].c_str(), conf.values[1].c_str());
+        Serial.print(".");
+      }
     }
+    lastCheck = millis();
   }
 }
