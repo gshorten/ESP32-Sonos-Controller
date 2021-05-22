@@ -14,7 +14,7 @@ String CurrentDT(int retType) {
   int hour = timeClient.getHours();
   //adjust for daylight savings time
   if ( currentMonth >= 3 && currentMonth <= 11) {
-    hour +=;
+    hour ++;
   }
   int minutes = timeClient.getMinutes();
   String strMinutes = addLeadingZero(minutes);
