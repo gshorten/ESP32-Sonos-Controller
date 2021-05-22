@@ -2,6 +2,9 @@
    Sonos controller using the Heltec Wifi Kit 32, an esp32 based board with wifi and on board 128 x 64
    OLED display, and battery charger (uses JST 1.25 connector).
    Uses this fork of SonosUPnP: https://github.com/gshorten/Sonos-ESP32
+
+   BOARD: Heltec ESP32 module / WiFi kit32
+   
    TODO:
     Fixes / bugs / features:
       - Add an "about" screen that shows information - ip of the control, firmware version.
@@ -96,7 +99,7 @@ long g_EncoderEvent = millis();       // time that an encoder event started
 boolean g_LowBattery = false;
 const int BATT_PIN = 37;
 boolean g_ControlsActive = false;     // flag, indicates that rotary encoder or pushbutton is in use
-String FirmwareVer = "5.3";           // current software version, update this to force software update
+String FirmwareVer = "5.31";           // current software version, update this to force software update
 // don't foreget to also update the file bin_version.txt to same version here, and upload to github repository so 
 // that the controller will update. Also don't forget to compile to a binary for upload to github.
 

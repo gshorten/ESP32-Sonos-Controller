@@ -12,6 +12,10 @@ String CurrentDT(int retType) {
   String currentMonthName = months[currentMonth];
   int currentYear = ptm->tm_year + 1900;
   int hour = timeClient.getHours();
+  //adjust for daylight savings time
+  if ( currentMonth >= 3 && currentMonth <= 11) {
+    hour +=;
+  }
   int minutes = timeClient.getMinutes();
   String strMinutes = addLeadingZero(minutes);
   // int seconds = timeClient.getSeconds();
